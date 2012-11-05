@@ -2,7 +2,6 @@ package com.example.ifb;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
 
 public class NewGroup extends Activity {
     @Override

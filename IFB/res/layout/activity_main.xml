@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/chooseButton"
         android:layout_below="@+id/chooseButton"
-        android:text="Create Invoice" 
+        android:text="Send Invoice" 
         android:onClick="sendInvoice" />
 
     <Button

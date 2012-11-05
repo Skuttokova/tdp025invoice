@@ -20,6 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".ChooseGroup">
+        </activity>   
+        <activity
+            android:name=".NewGroup">
+        </activity>
+       	<activity
+            android:name=".SendInvoice">
+        </activity>
     </application>
 
 </manifest>
