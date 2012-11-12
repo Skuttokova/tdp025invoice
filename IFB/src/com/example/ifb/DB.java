@@ -74,14 +74,14 @@ public class DB extends SQLiteOpenHelper {
 	    db.close(); // Closing database connection
 	}
 	
-	public void addUserToGroup(String group, String name) {
+   public void addUserToGroup(String group, String name) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    
-	    //Get user id (make read function)
-	    int userId
+	    //TODO Get user id (make read function)
+	    int userId = 0;
 	    
-	    //Get group id
-	    int groupId
+	    //TODO Get group id
+	    int groupId = 0;
 	    
 	    ContentValues values = new ContentValues();
 	    values.put("groupId", groupId); // Group Name
@@ -89,6 +89,40 @@ public class DB extends SQLiteOpenHelper {
 	 
 	    // Inserting Row
 	    db.insert("UserInGroups", null, values);
+	    db.close(); // Closing database connection
+	}
+	
+	public void addInvoice(String toUsername, double amount, String description, int groupId) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	 
+	    //TODO get userId with toUsername
+	    int userId = 0;
+	    
+	    ContentValues values = new ContentValues();
+	    values.put("amount", amount);
+	    values.put("description", description);
+	    values.put("groupId",groupId);
+	    values.put("userId",userId);
+	 
+	    // Inserting Row
+	    db.insert("Groups", null, values);
+	    db.close(); // Closing database connection
+	}
+	
+	public void addInvoice(String toUsername, double amount, String description) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	 
+	  //TODO get userId with toUsername
+	    int userId = 0;
+	    
+	    ContentValues values = new ContentValues();
+	    values.put("amount", amount);
+	    values.put("description", description);
+	    values.put("groupId",-1);
+	    values.put("userId",userId);
+	 
+	    // Inserting Row
+	    db.insert("Groups", null, values);
 	    db.close(); // Closing database connection
 	}
 	
