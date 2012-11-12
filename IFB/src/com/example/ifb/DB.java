@@ -44,8 +44,8 @@ public class DB extends SQLiteOpenHelper {
         
         //Invoice table
         CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Invoice" + "("
-                 + "id" + " INTEGER," + "amount" + " DOUBLE, " + "description" + "TEXT," + "groupId" + "INTEGER,"
-        		+ "userId" + "INTEGER" + "groupID" + "INTEGER" + ")";
+                 + "id" + " INTEGER" + "AUTOINCREMENT," + "amount" + " DOUBLE, " + "groupId" + "INTEGER," + "description" + "TEXT," + "groupId" + "INTEGER,"
+        		+ "userId" + "INTEGER" + ")";
          db.execSQL(CREATE_CONTACTS_TABLE);
          
          //Invoice table 2.0
@@ -69,6 +69,23 @@ public class DB extends SQLiteOpenHelper {
 	    db.close(); // Closing database connection
 	}
 	
+	public Integer getUserId(String userName) {
+	    // Select All Query
+	    String selectQuery = "SELECT id FROM Users WHERE name="+userName;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    if (cursor != null){
+	        cursor.moveToFirst();
+	        int userId = (int) cursor.getLong(0);
+	 
+	        return userId;
+	    }
+	    else
+	    	return null;
+	}
+	
 	public void addGroup(String name) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	 
@@ -78,6 +95,20 @@ public class DB extends SQLiteOpenHelper {
 	    // Inserting Row
 	    db.insert("Groups", null, values);
 	    db.close(); // Closing database connection
+	}
+	
+	public int getGroupId(String groupName) {
+	    // Select All Query
+	    String selectQuery = "SELECT id FROM Groups WHERE name="+groupName;
+	 
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	 
+	    if (cursor != null)
+	        cursor.moveToFirst();
+	    int groupId = (int) cursor.getLong(0);
+	 
+	    return groupId;
 	}
 	
    public void addUserToGroup(String group, String name) {
@@ -105,10 +136,11 @@ public class DB extends SQLiteOpenHelper {
 	    int userId = 0;
 	    
 	    ContentValues values = new ContentValues();
-	    values.put("userId",userId);
 	    values.put("amount", amount);
+	    values.put("groupId",groupId);
 	    values.put("description", description);
-	    values.put("groupID",groupId);
+	    values.put("userId",userId);
+	    
 	    
 	 
 	    // Inserting Row
@@ -124,9 +156,10 @@ public class DB extends SQLiteOpenHelper {
 	    
 	    ContentValues values = new ContentValues();
 	    values.put("amount", amount);
+	    values.put("groupId",-1);
 	    values.put("description", description);
 	    values.put("userId",userId);
-	    values.put("groupID",-1);
+	    
 	 
 	    // Inserting Row
 	    db.insert("Invoice", null, values);
