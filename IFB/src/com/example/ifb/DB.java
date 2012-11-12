@@ -16,7 +16,10 @@ public class DB extends SQLiteOpenHelper {
  
     // Database Name
     private static final String DATABASE_NAME = "IFB";
- 
+    
+    
+    
+    
     public DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -42,8 +45,11 @@ public class DB extends SQLiteOpenHelper {
         //Invoice table
         CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Invoice" + "("
                  + "id" + " INTEGER," + "amount" + " DOUBLE, " + "description" + "TEXT," + "groupId" + "INTEGER,"
-        		+ "userId" + "INTEGER" + ")";
+        		+ "userId" + "INTEGER" + "groupID" + "INTEGER" + ")";
          db.execSQL(CREATE_CONTACTS_TABLE);
+         
+         //Invoice table 2.0
+        
     }
 
 	@Override
@@ -99,13 +105,14 @@ public class DB extends SQLiteOpenHelper {
 	    int userId = 0;
 	    
 	    ContentValues values = new ContentValues();
+	    values.put("userId",userId);
 	    values.put("amount", amount);
 	    values.put("description", description);
-	    values.put("groupId",groupId);
-	    values.put("userId",userId);
+	    values.put("groupID",groupId);
+	    
 	 
 	    // Inserting Row
-	    db.insert("Groups", null, values);
+	    db.insert("Invoice", null, values);
 	    db.close(); // Closing database connection
 	}
 	
@@ -118,11 +125,11 @@ public class DB extends SQLiteOpenHelper {
 	    ContentValues values = new ContentValues();
 	    values.put("amount", amount);
 	    values.put("description", description);
-	    values.put("groupId",-1);
 	    values.put("userId",userId);
+	    values.put("groupID",-1);
 	 
 	    // Inserting Row
-	    db.insert("Groups", null, values);
+	    db.insert("Invoice", null, values);
 	    db.close(); // Closing database connection
 	}
 	
