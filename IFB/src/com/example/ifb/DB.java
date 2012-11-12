@@ -44,7 +44,11 @@ public class DB extends SQLiteOpenHelper {
         
         //Invoice table
         CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Invoice" + "("
+<<<<<<< HEAD
+                 + "id" + " INTEGER" + "AUTOINCREMENT," + "amount" + " DOUBLE, " + "groupId" + "INTEGER," + "description" + "TEXT," + "groupId" + "INTEGER,"
+=======
                  + "id" + " INTEGER," + "amount" + " DOUBLE, " + "description" + "TEXT," + "groupId" + "INTEGER,"
+>>>>>>> c07b49855b8ec8991d01ad8ea21ee4cabc016539
         		+ "userId" + "INTEGER" + ")";
          db.execSQL(CREATE_CONTACTS_TABLE);
          
@@ -139,10 +143,15 @@ public class DB extends SQLiteOpenHelper {
 	    int userId = 0;
 	    
 	    ContentValues values = new ContentValues();
-	    values.put("userId",userId);
 	    values.put("amount", amount);
-	    values.put("description", description);
 	    values.put("groupId",groupId);
+	    values.put("description", description);
+<<<<<<< HEAD
+	    values.put("userId",userId);
+	    
+=======
+	    values.put("groupId",groupId);
+>>>>>>> c07b49855b8ec8991d01ad8ea21ee4cabc016539
 	    
 	 
 	    // Inserting Row
@@ -158,9 +167,14 @@ public class DB extends SQLiteOpenHelper {
 	    
 	    ContentValues values = new ContentValues();
 	    values.put("amount", amount);
+	    values.put("groupId",-1);
 	    values.put("description", description);
 	    values.put("userId",userId);
+<<<<<<< HEAD
+	    
+=======
 	    values.put("groupId",-1);
+>>>>>>> c07b49855b8ec8991d01ad8ea21ee4cabc016539
 	 
 	    // Inserting Row
 	    db.insert("Invoice", null, values);
