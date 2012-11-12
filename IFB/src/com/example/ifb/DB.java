@@ -97,18 +97,21 @@ public class DB extends SQLiteOpenHelper {
 	    db.close(); // Closing database connection
 	}
 	
-	public int getGroupId(String groupName) {
+	public Integer getGroupId(String groupName) {
 	    // Select All Query
 	    String selectQuery = "SELECT id FROM Groups WHERE name="+groupName;
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
 	 
-	    if (cursor != null)
+	    if (cursor != null){
 	        cursor.moveToFirst();
-	    int groupId = (int) cursor.getLong(0);
+	        int groupId = (int) cursor.getLong(0);
 	 
-	    return groupId;
+	    	return groupId;
+	    }
+	    else
+	    	return null;
 	}
 	
    public void addUserToGroup(String group, String name) {

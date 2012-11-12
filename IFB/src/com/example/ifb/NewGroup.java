@@ -14,6 +14,7 @@ public class NewGroup extends Activity {
     DB database = new DB(this);
     
     String groupName = null;
+    int groupId;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,36 +28,16 @@ public class NewGroup extends Activity {
 		mGroup   = (EditText)findViewById(R.id.groupNameText);
 		groupName = mGroup.getText().toString();
 		
+		//If no groupname
 		if(groupName.equals("")){
-			final Context context = this;
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-	 
-				// set title
-				alertDialogBuilder.setTitle("Add group name!");
-	 
-				// set dialog message
-				alertDialogBuilder
-					.setMessage("Please add a group name!")
-					.setCancelable(false)
-					.setPositiveButton("Okey",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							// if this button is clicked, close
-							// current activity
-							dialog.cancel();
-						}
-					  });
-	 
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					// show it
-					alertDialog.show();
+			dialogMessage("Add group name!","Please add a group name!");
 		}
 		
-		//TODO Check if group already exists
-		/*else if(){
+		//Check if group already exists
+		
+		else if(database.getGroupId(groupName) != null){
 			
-		}*/
+		}
 		
 		//All clear, add group
 		else{
@@ -77,6 +58,8 @@ public class NewGroup extends Activity {
 			Button mButton;
 			mButton = (Button)findViewById(R.id.groupAddButton);
 			mButton.setEnabled(false);
+			
+			groupId = database.getGroupId(groupName);
 		}
     }
     	
@@ -87,73 +70,64 @@ public class NewGroup extends Activity {
 		
 		//If no groupName added
 		if(groupName == null){
-			final Context context = this;
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-	 
-				// set title
-				alertDialogBuilder.setTitle("Add group!");
-	 
-				// set dialog message
-				alertDialogBuilder
-					.setMessage("Please create a group before adding users!")
-					.setCancelable(false)
-					.setPositiveButton("Okey",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							dialog.cancel();
-						}
-					  });
-	 
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					// show it
-					alertDialog.show();
+			dialogMessage("Add grouop!","Please create a group before adding users!");
 		}
 		
 		//If no username added
 		else if(mUser.getText().toString().equals("")){
-			final Context context = this;
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-	 
-				// set title
-				alertDialogBuilder.setTitle("Add user!");
-	 
-				// set dialog message
-				alertDialogBuilder
-					.setMessage("Please write a username to add to the group!")
-					.setCancelable(false)
-					.setPositiveButton("Okey",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							dialog.cancel();
-						}
-					  });
-	 
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					// show it
-					alertDialog.show();
+			dialogMessage("Add user!","Please write a username to add to the group!");
 		}
 		
 		//All clear, add user
 		else{
+			String userName = mUser.getText().toString();
 			
 			//TODO add check to see if user exists
+			if(database.getUserId(userName) != null){
 			
-			//Add user
-			database.addUser(mUser.getText().toString());
-			
-			//Show toast
-			Context context = getApplicationContext();
-			CharSequence text = "User added to group";
-			int duration = Toast.LENGTH_SHORT;
-
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
-			
-			//Clear edittext field
-			mUser.setText("");
+				//Add user
+				database.addUser(userName);
+				
+				//Show toast
+				Context context = getApplicationContext();
+				CharSequence text = "User added to group";
+				int duration = Toast.LENGTH_SHORT;
+	
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+				
+				//Clear edittext field
+				mUser.setText("");
+			}
+			else{
+				dialogMessage("User error!","User does not exist!");
+			}
+				
 		}
+	}
+	
+	public void dialogMessage(String title, String message){
+		final Context context = this;
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+ 
+			// set title
+			alertDialogBuilder.setTitle(title);
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage(message)
+				.setCancelable(false)
+				.setPositiveButton("Okey",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				  });
+ 
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+ 
+				// show it
+				alertDialog.show();
 	}
     
     /*@Override
