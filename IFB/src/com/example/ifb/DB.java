@@ -28,24 +28,30 @@ public class DB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
     	//Users table
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Users" + "("
-                + "id" + " INTEGER PRIMARY KEY," + "name" + " TEXT" + ")";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Users" + "(" +
+        		"id" + " INTEGER PRIMARY KEY," +
+        		"name" + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
         
         //Groups table
-        CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Groups" + "("
-                + "id" + " INTEGER PRIMARY KEY," + "name" + " TEXT" + ")";
+        CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Groups" + "(" +
+        		"id" + " INTEGER PRIMARY KEY," +
+        		"name" + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
         
        //UserInGroups table
-       CREATE_CONTACTS_TABLE = "CREATE TABLE " + "UserInGroups" + "("
-                + "groupId" + " INTEGER," + "userId" + " INTEGER" + ")";
+       CREATE_CONTACTS_TABLE = "CREATE TABLE " + "UserInGroups" + "(" +
+    		   "groupId" + " INTEGER," +
+    		   "userId" + " INTEGER" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
         
         //Invoice table
-        CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Invoice" + "("
-                 + "id" + " INTEGER" + "AUTOINCREMENT," + "amount" + " DOUBLE, " + "groupId" + "INTEGER," + "description" + "TEXT,"
-        		+ "userId" + "INTEGER" + ")";
+        CREATE_CONTACTS_TABLE = "CREATE TABLE " + "Invoice" + "(" +
+        		"id" + " INTEGER" + "AUTOINCREMENT," +
+        		"amount" +" DOUBLE, " +
+                 "groupId" + "INTEGER," +
+        		"description" + "TEXT," +
+                 "userId" + "INTEGER" + ")";
          db.execSQL(CREATE_CONTACTS_TABLE);
          
          //Invoice table 2.0
