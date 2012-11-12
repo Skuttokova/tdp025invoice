@@ -23,11 +23,32 @@
         android:ems="10" />
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/groupNameText"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="33dp"
+        android:text="Group name:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/groupAddButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/groupNameText"
+        android:layout_below="@+id/groupNameText"
+        android:layout_marginTop="16dp"
+        android:onClick="clickAddGroup"
+        android:text="Add" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/textView1"
+        android:layout_alignLeft="@+id/groupAddButton"
+        android:layout_below="@+id/groupAddButton"
+        android:layout_marginTop="34dp"
         android:text="Add user:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -35,9 +56,9 @@
         android:id="@+id/addUserText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/groupNameText"
+        android:layout_alignLeft="@+id/textView3"
         android:layout_below="@+id/textView3"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="19dp"
         android:ems="10" >
 
         <requestFocus />
@@ -49,17 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/addUserText"
         android:layout_below="@+id/addUserText"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="20dp"
+        android:onClick="clickAddUser"
         android:text="Add" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/groupNameText"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="33dp"
-        android:text="Group name:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
