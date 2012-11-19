@@ -69,12 +69,13 @@ public class NewGroup extends Activity {
 		mUser   = (EditText)findViewById(R.id.addUserText);
 		
 		//If no groupName added
-		if(groupName == null){
+		/*if(groupName == null){
 			dialogMessage("Add grouop!","Please create a group before adding users!");
-		}
+		}*/
 		
 		//If no username added
-		else if(mUser.getText().toString().equals("")){
+		//else 
+		if(mUser.getText().toString().equals("")){
 			dialogMessage("Add user!","Please write a username to add to the group!");
 		}
 		
@@ -83,6 +84,9 @@ public class NewGroup extends Activity {
 			String userName = mUser.getText().toString();
 			
 			//TODO add check to see if user exists
+			MYSQLDB db = new MYSQLDB();
+			db.getUserId(userName);
+			
 			if(database.getUserId(userName) != null){
 			
 				//Add user
