@@ -11,7 +11,7 @@ import com.facebook.android.AsyncFacebookRunner;
 
 public class MainActivity extends Activity {
 
-	Facebook facebook = new Facebook("YOUR_APP_ID");
+	Facebook facebook = new Facebook("292110737575173");
     AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);
     
     @Override
