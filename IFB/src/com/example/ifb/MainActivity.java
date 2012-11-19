@@ -1,11 +1,16 @@
 package com.example.ifb;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import com.facebook.android.*;
+import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.Facebook.*;
 import com.facebook.android.AsyncFacebookRunner;
 
@@ -28,6 +33,24 @@ public class MainActivity extends Activity {
 
             public void onCancel() {}
         });
+    }
+    
+    public void logout(){
+    	
+    mAsyncRunner.logout(getBaseContext(), new RequestListener() {
+
+    	  public void onComplete(String response, Object state) {}
+    	  
+    	  public void onIOException(IOException e, Object state) {}
+    	  
+    	  public void onFileNotFoundException(FileNotFoundException e,
+    	        Object state) {}
+    	  
+    	  public void onMalformedURLException(MalformedURLException e,
+    	        Object state) {}
+    	  
+    	  public void onFacebookError(FacebookError e, Object state) {}
+    	});
     }
 
     @Override
