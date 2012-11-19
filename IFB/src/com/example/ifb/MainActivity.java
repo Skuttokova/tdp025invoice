@@ -5,13 +5,29 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import com.facebook.android.*;
+import com.facebook.android.Facebook.*;
+import com.facebook.android.AsyncFacebookRunner;
 
 public class MainActivity extends Activity {
 
+	Facebook facebook = new Facebook("YOUR_APP_ID");
+    AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        facebook.authorize(this, new DialogListener() {
+            public void onComplete(Bundle values) {}
+
+            public void onFacebookError(FacebookError error) {}
+
+            public void onError(DialogError e) {}
+
+            public void onCancel() {}
+        });
     }
 
     @Override
