@@ -1,4 +1,6 @@
 package com.example.ifb;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +16,39 @@ public class MYSQLDB {
 	
 	private static String db_url = "http://54.247.71.173/IFB/data.php";
 
-	public void getUserId(String userName){
-		String query = "data={\"query\":\"SELECT id FROM Users WHERE name='"+userName+"'\"}";
+	
+	//getId("User1","Users"); || getId("TestGroup","Group");
+	public Integer getId(String userName, String table){
+		String query = "data={\"query\":\"SELECT id FROM "+table+" WHERE name='"+userName+"'\"}";
 		
 		JSONObject json = sendQuery(query);
-		JSONArray result = checkSuccess(json);
+		if(checkSuccess(json)){
+			try{
+			JSONArray result = json.getJSONArray("result");
+			Integer id = null;
+			//TODO get value from id
+			
+			return id;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
 	}
+	
+	//TODO Finish
+	public Integer addInto(String username, String password, String table) throws NoSuchAlgorithmException{
+		//md5 password
+		String encPassword = MessageDigest.getInstance(password).toString();
+		String query = "data={\"query\":\"INSERT INTO "+table+" ('name','password') VALUES("+username+","+encPassword+")\"}";
+		
+		JSONObject json = sendQuery(query);
+		return null;
+	}
+	
 	
 	public JSONObject sendQuery(String query){
 		//Add password
@@ -39,24 +68,23 @@ public class MYSQLDB {
 		return json; 
 	}
 	
-	public JSONArray checkSuccess(JSONObject json){
-		JSONArray result = null;
+	public boolean checkSuccess(JSONObject json){
 		try{
 			if(json == null){
-				return null;
+				//Server/client connection error
+				return false;
 			}
 			else if(json.getInt("success")==1){
-				result = json.getJSONArray("result");
-				
-				return result;
+				return true;
 			}
 			else{
-				return null;
+				//No rows matched
+				return false;
 			}
 		}
 		catch (JSONException e){
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 	}
 }

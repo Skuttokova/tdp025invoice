@@ -85,7 +85,7 @@ public class NewGroup extends Activity {
 			
 			//TODO add check to see if user exists
 			MYSQLDB db = new MYSQLDB();
-			db.getUserId(userName);
+			db.getId(userName,"Users");
 			
 			if(database.getUserId(userName) != null){
 			

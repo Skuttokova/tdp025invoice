@@ -50,7 +50,8 @@ public class MainActivity extends Activity {
         		}
         		else
         		{
-        			//skicka username och password till databasen och kolla ifall man får logga in
+        			//skicka username och password till databasen och kolla ifall man fï¿½r logga in
+        			setContentView(R.layout.activity_main);
         		}
         	
         	}
