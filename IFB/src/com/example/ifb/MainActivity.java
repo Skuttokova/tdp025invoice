@@ -4,27 +4,59 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import com.facebook.android.*;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+
+/*import com.facebook.android.*;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.Facebook.*;
-import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.AsyncFacebookRunner;*/
 
 public class MainActivity extends Activity {
 
-	Facebook facebook = new Facebook("292110737575173");
-    AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);
+	/*Facebook facebook = new Facebook("292110737575173");
+    AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);*/
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
+        Button login = (Button)findViewById(R.id.login_button);
         
-        facebook.authorize(this, new DialogListener() {
+        login.setOnClickListener(new OnClickListener()
+        {
+        	public void onClick(View viewParam)
+        	{
+        		EditText usernameEdit = (EditText) findViewById(R.id.username);
+        		EditText passwordEdit = (EditText) findViewById(R.id.password);
+        		
+        		String username = usernameEdit.getText().toString();
+        		String password = passwordEdit.getText().toString();
+        		
+        		if(username.length() <= 0 || password.length() <= 0)
+        		{
+        			Toast.makeText(getApplicationContext(),"Please enter username and password",Toast.LENGTH_SHORT).show();
+        		}
+        		else
+        		{
+        			//skicka username och password till databasen och kolla ifall man får logga in
+        		}
+        	
+        	}
+        	
+        });
+     /*   facebook.authorize(this, new DialogListener() {
             public void onComplete(Bundle values) {}
 
             public void onFacebookError(FacebookError error) {}
@@ -32,10 +64,12 @@ public class MainActivity extends Activity {
             public void onError(DialogError e) {}
 
             public void onCancel() {}
-        });
+        });*/
+        
+        //setContentView(R.layout.activity_main);
     }
     
-    public void logout(){
+   /* public void logout(){
     	
     mAsyncRunner.logout(getBaseContext(), new RequestListener() {
 
@@ -52,7 +86,7 @@ public class MainActivity extends Activity {
     	  public void onFacebookError(FacebookError e, Object state) {}
     	});
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
