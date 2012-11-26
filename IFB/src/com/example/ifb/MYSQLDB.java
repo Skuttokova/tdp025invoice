@@ -15,13 +15,20 @@ public class MYSQLDB {
 	private static String db_url = "http://54.247.71.173/IFB/data.php";
 
 	public void getUserId(String userName){
-		String query = "SELECT id FROM Users WHERE name="+userName;
+		String query = "data={\"query\":\"SELECT id FROM Users WHERE name='"+userName+"'\"}";
 		
 		JSONObject json = sendQuery(query);
 		JSONArray result = checkSuccess(json);
 	}
 	
 	public JSONObject sendQuery(String query){
+		//Add password
+		query += "&password=1234";
+		
+		//Replace characters
+		//<space>,{,},"
+		query = query.replace(" ","%20").replace("{", "%7B").replace("}","%7D").replace(":", "%3A").replace("\"", "%22");
+		
 		JSONObject jQuery = new JSONObject();
 		try {
 			jQuery.put("query", query);
