@@ -42,7 +42,10 @@ public class MYSQLDB {
 	public JSONArray checkSuccess(JSONObject json){
 		JSONArray result = null;
 		try{
-			if(json.getInt("success")==1){
+			if(json == null){
+				return null;
+			}
+			else if(json.getInt("success")==1){
 				result = json.getJSONArray("result");
 				
 				return result;
