@@ -62,15 +62,47 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	public Integer addGroup(String name){
+		String query = "data={\"query\":\"INSERT INTO `Group` VALUES('','"+name+"')\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
+	}
 	
-	//TODO Finish
 	public Integer addUser(String username, String password) throws NoSuchAlgorithmException{
 		//md5 password
 		String encPassword = MessageDigest.getInstance(password).toString();
-		String query = "data={\"query\":\"INSERT INTO Users ('name','password') VALUES("+username+","+encPassword+")\"}";
-		
+		String query = "data={\"query\":\"INSERT INTO `Users` VALUES('','"+username+"','"+encPassword+"')\"}";
 		JSONObject json = sendQuery(query);
-		return null;
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
+	}
+	
+	//Looks up id from names
+	public Integer addUserToGroup(String userName, String groupName){
+		int userId = getUserId(userName);
+		int groupId = getGroupId(groupName);
+		
+		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+")\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
+	}
+	
+	//Uses ids from parameters
+	public Integer addUserToGroup(Integer userId, Integer groupId){
+		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+")\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
 	}
 	
 	

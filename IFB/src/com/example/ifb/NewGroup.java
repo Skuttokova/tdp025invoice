@@ -40,25 +40,23 @@ public class NewGroup extends Activity {
 		
 		//All clear, add group
 		else{
-			//TODO db.addGroup(groupName);
-			
-			//TODO add self to group
-			//
-			
-			//Show toast
-			Context context = getApplicationContext();
-			CharSequence text = "Group created!";
-			int duration = Toast.LENGTH_SHORT;
-
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
-			
-			//Disable button
-			Button mButton;
-			mButton = (Button)findViewById(R.id.groupAddButton);
-			mButton.setEnabled(false);
-			
-			//TODO groupId = db.getGroupId(groupName);
+			if(db.addGroup(groupName) != null){
+				
+				//TODO add self to group
+				
+				//Show toast
+				Context context = getApplicationContext();
+				CharSequence text = "Group created!";
+				int duration = Toast.LENGTH_SHORT;
+	
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+				
+				//Disable button
+				Button mButton;
+				mButton = (Button)findViewById(R.id.groupAddButton);
+				mButton.setEnabled(false);
+			}
 		}
     }
     	
@@ -68,12 +66,11 @@ public class NewGroup extends Activity {
 		mUser   = (EditText)findViewById(R.id.addUserText);
 		
 		//If no groupName added
-		/*if(groupName == null){
-			dialogMessage("Add grouop!","Please create a group before adding users!");
-		}*/
+		if(groupName == null){
+			dialogMessage("Add group!","Please create a group before adding users!");
+		}
 		
 		//If no username added
-		//else 
 		if(mUser.getText().toString().equals("")){
 			dialogMessage("Add user!","Please write a username to add to the group!");
 		}
@@ -85,22 +82,27 @@ public class NewGroup extends Activity {
 			//TODO add check to see if user exists
 			if(db.getUserId(userName) != null){
 			
-				//TODO Add user to group
-				//db.addUser(userName);
-				
-				//Show toast
-				Context context = getApplicationContext();
-				CharSequence text = "User added to group";
-				int duration = Toast.LENGTH_SHORT;
-	
-				Toast toast = Toast.makeText(context, text, duration);
-				toast.show();
-				
-				//Clear edittext field
-				mUser.setText("");
+				//Add user to group
+				if(db.addUserToGroup(userName, groupName) != null){
+					//Show toast
+					Context context = getApplicationContext();
+					CharSequence text = "User added to group";
+					int duration = Toast.LENGTH_SHORT;
+		
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+					
+					//Clear edittext field
+					mUser.setText("");
+				}
+				else{
+					dialogMessage("Error!","Could not add user to group! Please try again later.");
+				}
 			}
 			else{
 				dialogMessage("User error!","User does not exist!");
+				//Clear edittext field
+				mUser.setText("");
 			}
 				
 		}
