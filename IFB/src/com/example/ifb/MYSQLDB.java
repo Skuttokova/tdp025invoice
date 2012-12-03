@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.widget.Toast;
 
 public class MYSQLDB {
 	//http://www.androidhive.info/2012/05/how-to-connect-android-with-php-mysql/
@@ -18,15 +19,16 @@ public class MYSQLDB {
 
 	
 	//getId("User1","Users"); || getId("TestGroup","Group");
-	public Integer getId(String userName, String table){
-		String query = "data={\"query\":\"SELECT id FROM "+table+" WHERE name='"+userName+"'\"}";
+	public Integer getId(String name, String table){
+		String query = "data={\"query\":\"SELECT id FROM "+table+" WHERE name='"+name+"'\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try{
-			JSONArray result = json.getJSONArray("result");
+			JSONArray jsonArray = json.getJSONArray("result");
 			Integer id = null;
 			//TODO get value from id
+			id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
 			
 			return id;
 			}
@@ -40,10 +42,10 @@ public class MYSQLDB {
 	}
 	
 	//TODO Finish
-	public Integer addInto(String username, String password, String table) throws NoSuchAlgorithmException{
+	public Integer addUser(String username, String password) throws NoSuchAlgorithmException{
 		//md5 password
 		String encPassword = MessageDigest.getInstance(password).toString();
-		String query = "data={\"query\":\"INSERT INTO "+table+" ('name','password') VALUES("+username+","+encPassword+")\"}";
+		String query = "data={\"query\":\"INSERT INTO Users ('name','password') VALUES("+username+","+encPassword+")\"}";
 		
 		JSONObject json = sendQuery(query);
 		return null;

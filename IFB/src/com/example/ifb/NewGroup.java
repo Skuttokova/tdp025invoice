@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 public class NewGroup extends Activity {
-    DB database = new DB(this);
     
     String groupName = null;
     int groupId;
@@ -35,13 +34,13 @@ public class NewGroup extends Activity {
 		
 		//Check if group already exists
 		
-		else if(database.getGroupId(groupName) != null){
+		/*TODO else if(db.getGroupId(groupName) != null){
 			
-		}
+		}*/
 		
 		//All clear, add group
 		else{
-			database.addGroup(groupName);
+			//TODO db.addGroup(groupName);
 			
 			//TODO add self to group
 			//
@@ -59,7 +58,7 @@ public class NewGroup extends Activity {
 			mButton = (Button)findViewById(R.id.groupAddButton);
 			mButton.setEnabled(false);
 			
-			groupId = database.getGroupId(groupName);
+			//TODO groupId = db.getGroupId(groupName);
 		}
     }
     	
@@ -85,12 +84,10 @@ public class NewGroup extends Activity {
 			
 			//TODO add check to see if user exists
 			MYSQLDB db = new MYSQLDB();
-			db.getId(userName,"Users");
+			if(db.getId(userName,"Users") != null){
 			
-			if(database.getUserId(userName) != null){
-			
-				//Add user
-				database.addUser(userName);
+				//TODO Add user to group
+				//db.addUser(userName);
 				
 				//Show toast
 				Context context = getApplicationContext();
