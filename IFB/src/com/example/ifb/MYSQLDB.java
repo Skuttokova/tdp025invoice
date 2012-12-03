@@ -2,6 +2,7 @@ package com.example.ifb;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -26,7 +27,7 @@ public class MYSQLDB {
 			try{
 			JSONArray jsonArray = json.getJSONArray("result");
 			Integer id = null;
-			//TODO get value from id
+			//get value from id
 			id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
 			
 			return id;
@@ -48,10 +49,60 @@ public class MYSQLDB {
 			try{
 			JSONArray jsonArray = json.getJSONArray("result");
 			Integer id = null;
-			//TODO get value from id
+			//get value from id
 			id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
 			
 			return id;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
+	//TODO Check if works
+	public Integer[] getUsersGroups(String userName){
+		Integer userid = getUserId(userName);
+		String query = "data={\"query\":\"SELECT groupId FROM `UserInGroup` WHERE userId="+userid+"\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			
+			Integer[] groupArray = new Integer[jsonArray.length()];
+			for(int i=0; i<jsonArray.length(); i++){
+				groupArray[i] = Integer.parseInt(jsonArray.getJSONObject(i).getString("id"));
+			}
+			
+			return groupArray;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
+	//TODO check if works
+	public HashMap getGroupInfo(Integer groupId){
+		
+		String query = "data={\"query\":\"SELECT * FROM `Group` WHERE id="+groupId+"\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			HashMap map = new HashMap();
+			map.put("id",Integer.parseInt(jsonArray.getJSONObject(0).getString("id")));
+			map.put("name",jsonArray.getJSONObject(0).getString("name"));
+			
+			return map;
 			}
 			catch(JSONException e){
 				e.printStackTrace();
