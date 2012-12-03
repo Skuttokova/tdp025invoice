@@ -18,9 +18,8 @@ public class MYSQLDB {
 	private static String db_url = "http://54.247.71.173/IFB/data.php";
 
 	
-	//getId("User1","Users"); || getId("TestGroup","Group");
-	public Integer getId(String name, String table){
-		String query = "data={\"query\":\"SELECT id FROM "+table+" WHERE name='"+name+"'\"}";
+	public Integer getUserId(String name){
+		String query = "data={\"query\":\"SELECT id FROM `Users` WHERE name='"+name+"'\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
@@ -41,6 +40,29 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	public Integer getGroupId(String name){
+		String query = "data={\"query\":\"SELECT id FROM `Group` WHERE name='"+name+"'\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			Integer id = null;
+			//TODO get value from id
+			id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
+			
+			return id;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
+	
 	//TODO Finish
 	public Integer addUser(String username, String password) throws NoSuchAlgorithmException{
 		//md5 password
@@ -58,7 +80,7 @@ public class MYSQLDB {
 		
 		//Replace characters
 		//<space>,{,},"
-		query = query.replace(" ","%20").replace("{", "%7B").replace("}","%7D").replace(":", "%3A").replace("\"", "%22");
+		query = query.replace(" ","%20").replace("{", "%7B").replace("}","%7D").replace(":", "%3A").replace("\"", "%22").replace("`", "%60");
 		
 		JSONObject jQuery = new JSONObject();
 		try {

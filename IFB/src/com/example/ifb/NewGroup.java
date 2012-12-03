@@ -14,7 +14,8 @@ public class NewGroup extends Activity {
     
     String groupName = null;
     int groupId;
-	
+	MYSQLDB db = new MYSQLDB();
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +34,9 @@ public class NewGroup extends Activity {
 		}
 		
 		//Check if group already exists
-		
-		/*TODO else if(db.getGroupId(groupName) != null){
-			
-		}*/
+		else if(db.getGroupId(groupName) != null){
+			dialogMessage("Group error!","Group name already exists!");
+		}
 		
 		//All clear, add group
 		else{
@@ -83,8 +83,7 @@ public class NewGroup extends Activity {
 			String userName = mUser.getText().toString();
 			
 			//TODO add check to see if user exists
-			MYSQLDB db = new MYSQLDB();
-			if(db.getId(userName,"Users") != null){
+			if(db.getUserId(userName) != null){
 			
 				//TODO Add user to group
 				//db.addUser(userName);
