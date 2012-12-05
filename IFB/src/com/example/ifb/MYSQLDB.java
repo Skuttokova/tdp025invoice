@@ -86,7 +86,33 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	//Gets users in specific group
+	public Integer[] getGroupUsers(Integer groupId){
+		String query = "data={\"query\":\"SELECT userId FROM `UserInGroup` WHERE groupId="+groupId+"\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			Integer[] groupArray = new Integer[jsonArray.length()];
+			//get value from id
+			for(int i = 0; i < jsonArray.length(); i++){
+				groupArray[i] = Integer.parseInt(jsonArray.getJSONObject(i).getString("userId"));
+			}
+			
+			return groupArray;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
 	//TODO Check if works
+	//Get groups that user is a member of
 	public HashMap[] getUsersGroups(String userName){
 		Integer userid = getUserId(userName);
 		String query = "data={\"query\":\"SELECT * FROM `UserInGroup` WHERE userId="+userid+"\"}";
@@ -116,6 +142,7 @@ public class MYSQLDB {
 	}
 	
 	//TODO check if works
+	//Get groups that user is a member of
 	public HashMap getGroupInfo(Integer groupId){
 		
 		String query = "data={\"query\":\"SELECT * FROM `Group` WHERE id="+groupId+"\"}";
@@ -204,6 +231,45 @@ public class MYSQLDB {
 				return 1;
 			else
 				return null;
+		}
+		else
+			return null;
+	}
+	
+	public Integer addInvoice(String groupName, Double amount, String desc, String senderName){
+		int groupId = getGroupId(groupName);
+		int senderId = getUserId(senderName);
+		String uniqueId = UUID.randomUUID().toString();
+		//Add Invoice
+		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+groupId+",'"+desc+"',"+senderId+",'"+uniqueId+"')\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			Integer invoiceId  = getInvoiceId(uniqueId);
+			
+			//Get array of users in group
+			Integer[] groupArray = getGroupUsers(groupId);
+			
+			int failCount = 0;
+			for(int i = 0; i < groupArray.length; i++){
+				//Add to UsersInvoices
+				query = "data={\"query\":\"INSERT INTO `UsersInvoices` VALUES('',"+invoiceId+","+groupArray[i]+","+0+")\"}";
+				json = sendQuery(query);
+				if(checkSuccess(json)){
+				}
+				else
+					failCount++;
+			}
+			if(failCount>0){
+				return null;
+			}
+			else
+				return 1;
 		}
 		else
 			return null;
