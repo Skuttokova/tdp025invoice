@@ -64,21 +64,24 @@ public class MYSQLDB {
 	}
 	
 	//TODO Check if works
-	public Integer[] getUsersGroups(String userName){
+	public HashMap[] getUsersGroups(String userName){
 		Integer userid = getUserId(userName);
-		String query = "data={\"query\":\"SELECT groupId FROM `UserInGroup` WHERE userId="+userid+"\"}";
+		String query = "data={\"query\":\"SELECT * FROM `UserInGroup` WHERE userId="+userid+"\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try{
 			JSONArray jsonArray = json.getJSONArray("result");
 			
-			Integer[] groupArray = new Integer[jsonArray.length()];
+			HashMap[] groupMap = new HashMap[jsonArray.length()];
 			for(int i=0; i<jsonArray.length(); i++){
-				groupArray[i] = Integer.parseInt(jsonArray.getJSONObject(i).getString("id"));
+				HashMap map = new HashMap();
+				map.put("id", Integer.parseInt(jsonArray.getJSONObject(i).getString("id")));
+				map.put("name", Integer.parseInt(jsonArray.getJSONObject(i).getString("name")));
+				groupMap[i] = map;
 			}
 			
-			return groupArray;
+			return groupMap;
 			}
 			catch(JSONException e){
 				e.printStackTrace();
