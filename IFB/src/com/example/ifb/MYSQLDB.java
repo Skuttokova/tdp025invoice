@@ -19,7 +19,8 @@ public class MYSQLDB {
 	
 	private static String db_url = "http://54.247.71.173/IFB/data.php";
 
-	
+
+//-----------------------Getters-Start-----------------------
 	public Integer getUserId(String name){
 		String query = "data={\"query\":\"SELECT id FROM `Users` WHERE name='"+name+"'\"}";
 		
@@ -111,7 +112,6 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	//TODO Check if works
 	//Get groups that user is a member of
 	public HashMap[] getUsersGroups(String userName){
 		Integer userid = getUserId(userName);
@@ -124,10 +124,9 @@ public class MYSQLDB {
 			
 			HashMap[] groupMap = new HashMap[jsonArray.length()];
 			for(int i=0; i<jsonArray.length(); i++){
-				HashMap map = new HashMap();
-				map.put("id", Integer.parseInt(jsonArray.getJSONObject(i).getString("id")));
-				map.put("name", Integer.parseInt(jsonArray.getJSONObject(i).getString("name")));
-				groupMap[i] = map;
+				
+				//Get group-info from groupId
+				groupMap[i] = getGroupInfo(Integer.parseInt(jsonArray.getJSONObject(i).getString("groupId")));
 			}
 			
 			return groupMap;
@@ -141,7 +140,6 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	//TODO check if works
 	//Get groups that user is a member of
 	public HashMap getGroupInfo(Integer groupId){
 		
@@ -165,7 +163,9 @@ public class MYSQLDB {
 		else
 			return null;
 	}
+//-----------------------Getters-End-----------------------	
 	
+//-----------------------Adders-Start-----------------------
 	public Integer addGroup(String name){
 		String query = "data={\"query\":\"INSERT INTO `Group` VALUES('','"+name+"')\"}";
 		JSONObject json = sendQuery(query);
@@ -274,7 +274,9 @@ public class MYSQLDB {
 		else
 			return null;
 	}
+//-----------------------Adders-End-----------------------
 	
+//-----------------------Removers/Updaters-Start-----------------------
 	//TODO check if works
 	//Removes user from group
 	public Integer leaveGroup(String groupName, String userName){
@@ -287,7 +289,7 @@ public class MYSQLDB {
 		else
 			return null;
 	}
-	
+//-----------------------Removers/Updaters-End-----------------------
 	
 	public JSONObject sendQuery(String query){
 		//Add password

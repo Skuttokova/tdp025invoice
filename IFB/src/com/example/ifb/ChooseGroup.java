@@ -16,7 +16,7 @@ public class ChooseGroup extends Activity{
         setContentView(R.layout.choose_group);
         HashMap[] groupMap;
         MYSQLDB db = new MYSQLDB();
-        //groupMap = db.getUsersGroups(Globals.clientName); get hashmap of users groups
+        groupMap = db.getUsersGroups(Globals.clientName); //get hashmap of users groups
        // db.getUsersGroups("user1");
        // ListView groupList = (ListView)findViewById(R.id.groupList); create listview to show groups
       //  Toast.makeText(getApplicationContext(),groupMap.length,Toast.LENGTH_SHORT).show();

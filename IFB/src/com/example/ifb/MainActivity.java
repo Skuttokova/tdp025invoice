@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         	
         	
         });
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
      /*   facebook.authorize(this, new DialogListener() {
             public void onComplete(Bundle values) {}
 
