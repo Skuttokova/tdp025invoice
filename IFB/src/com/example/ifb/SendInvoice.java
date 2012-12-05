@@ -35,7 +35,9 @@ public class SendInvoice extends Activity {
     	amount = aEdit.getText().toString();
     	desc = dEdit.getText().toString();
     	
-    	if(toText != "" && amount != "0.0" && desc != ""){
+    	if(toText.equals("") || amount.equals("0.0") || desc.equals(""))
+    		dialogMessage("Empty field", "Please dont leave any field empty.");
+    	else{
     		double amountToDouble = Double.parseDouble(amount);
     		if(db.getUserId(toText) != null){
     			Button mButton;
@@ -62,9 +64,6 @@ public class SendInvoice extends Activity {
     		else{
     			dialogMessage("Username error", "User does not exist!");
     		}
-    	}
-    	else{
-    		dialogMessage("Empty field", "Please dont leave any field empty!");
     	}
     }
     
