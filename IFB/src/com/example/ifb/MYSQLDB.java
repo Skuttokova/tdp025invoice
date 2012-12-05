@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
@@ -21,6 +22,28 @@ public class MYSQLDB {
 	
 	public Integer getUserId(String name){
 		String query = "data={\"query\":\"SELECT id FROM `Users` WHERE name='"+name+"'\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			Integer id = null;
+			//get value from id
+			id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
+			
+			return id;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
+	public Integer getInvoiceId(String uniqueId){
+		String query = "data={\"query\":\"SELECT id FROM `Invoice` WHERE uniqueId='"+uniqueId+"'\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
@@ -162,10 +185,26 @@ public class MYSQLDB {
 	public Integer addPrivInvoice(String userName, Double amount, String desc, String senderName){
 		int id = getUserId(userName);
 		int senderId = getUserId(senderName);
-		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+-1+",'"+desc+"',"+senderId+")\"}";
+		String uniqueId = UUID.randomUUID().toString();
+		//Add Invoice
+		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+-1+",'"+desc+"',"+senderId+",'"+uniqueId+"')\"}";
 		JSONObject json = sendQuery(query);
-		if(checkSuccess(json))
-			return 1;
+		if(checkSuccess(json)){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			Integer invoiceId  = getInvoiceId(uniqueId);
+			//Add to UsersInvoices
+			query = "data={\"query\":\"INSERT INTO `UsersInvoices` VALUES('',"+invoiceId+","+id+","+0+")\"}";
+			json = sendQuery(query);
+			if(checkSuccess(json))
+				return 1;
+			else
+				return null;
+		}
 		else
 			return null;
 	}

@@ -11,7 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 public class SendInvoice extends Activity {
-	DB db = new DB(this);
+	MYSQLDB db = new MYSQLDB();
 	String toText = "";
 	String amount = "";
 	String desc = "";
@@ -38,7 +38,10 @@ public class SendInvoice extends Activity {
     	if(toText != "" && amount != "0.0" && desc != ""){
     		double amountToDouble = Double.parseDouble(amount);
     		if(db.getUserId(toText) != null){
-	    		/*if(db.addPrivInvoice(toText, amountToDouble, desc) != null){
+    			Button mButton;
+    			mButton = (Button) findViewById(R.id.sendInvoiceButton);
+    			mButton.setEnabled(false);
+	    		if(db.addPrivInvoice(toText, amountToDouble, desc, Globals.clientName) != null){
 	    		
 					//Show toast
 					Context context = getApplicationContext();
@@ -52,8 +55,9 @@ public class SendInvoice extends Activity {
 		    		aEdit.setText("");
 	    		}
 	    		else{
-	    			dialogMessage("Send error", "Could not send invoice at the moment, please try again later.")
-	    		}*/
+	    			dialogMessage("Send error", "Could not send invoice at the moment, please try again later.");
+	    		}
+	    		mButton.setEnabled(true);
     		}
     		else{
     			dialogMessage("Username error", "User does not exist!");
