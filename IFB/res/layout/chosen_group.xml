@@ -20,7 +20,7 @@
         android:layout_below="@+id/membersButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
-        android:onClick="leave"
+        android:onClick="leaveGroup"
         android:text="Leave group" />
 
     <Button
@@ -39,6 +39,7 @@
         android:layout_below="@+id/groupNameTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
+        android:onClick="showGroupInvoices"
         android:text="Show Invoices" />
 
     <Button

@@ -42,7 +42,8 @@ public class NewGroup extends Activity {
 		else{
 			if(db.addGroup(groupName) != null){
 				
-				//TODO add self to group
+				//add self to group
+				db.addUserToGroup(Globals.clientName,groupName);
 				
 				//Show toast
 				Context context = getApplicationContext();

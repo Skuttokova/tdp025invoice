@@ -17,43 +17,51 @@ public final class R {
         public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
-        public static final int addUserText=0x7f070014;
-        public static final int amountText=0x7f070018;
+        public static final int addUserText=0x7f070018;
+        public static final int amountText=0x7f07001a;
         public static final int chooseButton=0x7f070001;
         public static final int createGroupButton=0x7f070000;
         public static final int createInvoiceButton=0x7f070002;
-        public static final int descriptionText=0x7f07001a;
+        public static final int descriptionText=0x7f07001d;
         public static final int exitButton=0x7f070003;
-        public static final int groupAddButton=0x7f070012;
+        public static final int groupAddButton=0x7f070016;
         public static final int groupInvoiceButton=0x7f070009;
+        public static final int groupInvoicesTextView=0x7f07000b;
         public static final int groupList=0x7f070005;
-        public static final int groupNameText=0x7f070010;
+        public static final int groupMembersListView=0x7f07000e;
+        public static final int groupMembersTextView=0x7f07000d;
+        public static final int groupNameText=0x7f070014;
         public static final int groupNameTextView=0x7f070006;
         public static final int leaveButton=0x7f070007;
-        public static final int login_button=0x7f07000f;
+        public static final int listView1=0x7f07000c;
+        public static final int login_button=0x7f070013;
         public static final int membersButton=0x7f070008;
-        public static final int menu_settings=0x7f07001c;
-        public static final int password=0x7f07000e;
-        public static final int passwordText=0x7f07000d;
-        public static final int sendInvoiceButton=0x7f07001b;
+        public static final int menu_settings=0x7f070021;
+        public static final int password=0x7f070012;
+        public static final int passwordText=0x7f070011;
+        public static final int sendGroupInvoiceTextView=0x7f07001f;
+        public static final int sendInvoiceButton=0x7f07001e;
         public static final int showInvoices=0x7f07000a;
         public static final int textView1=0x7f070004;
-        public static final int textView2=0x7f070011;
-        public static final int textView3=0x7f070013;
-        public static final int textView4=0x7f070017;
-        public static final int textView5=0x7f070019;
-        public static final int toText=0x7f070016;
-        public static final int userAddButton=0x7f070015;
-        public static final int username=0x7f07000c;
-        public static final int usernameText=0x7f07000b;
+        public static final int textView2=0x7f070015;
+        public static final int textView3=0x7f070017;
+        public static final int textView4=0x7f07001b;
+        public static final int textView5=0x7f07001c;
+        public static final int toText=0x7f070020;
+        public static final int userAddButton=0x7f070019;
+        public static final int username=0x7f070010;
+        public static final int usernameText=0x7f07000f;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int choose_group=0x7f030001;
         public static final int chosen_group=0x7f030002;
-        public static final int login=0x7f030003;
-        public static final int new_group=0x7f030004;
-        public static final int send_invoice=0x7f030005;
+        public static final int group_invoices=0x7f030003;
+        public static final int group_members=0x7f030004;
+        public static final int login=0x7f030005;
+        public static final int new_group=0x7f030006;
+        public static final int send_group_invoice=0x7f030007;
+        public static final int send_invoice=0x7f030008;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;

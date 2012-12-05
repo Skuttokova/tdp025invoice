@@ -6,6 +6,7 @@ import com.example.ifb.R.layout;
 
 import android.os.Bundle;
 import android.provider.Settings.Global;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,12 @@ public class ChosenGroup extends Activity {
         mTextView.setText(Globals.currentGroup);
 	}
     
+    
+    public void showGroupInvoices(View view) {
+    	Intent i = new Intent(this, GroupInvoices.class);  
+    	startActivityForResult(i, 0);
+    }
+    
     public void sendGroupInvoice(View view) {
     	Intent i = new Intent(this, SendGroupInvoice.class);  
     	startActivityForResult(i, 0);
@@ -40,7 +47,16 @@ public class ChosenGroup extends Activity {
     public void leaveGroup(View view) {
     	MYSQLDB db = new MYSQLDB();
     	if(db.leaveGroup(Globals.currentGroup, Globals.clientName) != null){
-    		//Touch
+			//Show toast
+			Context context = getApplicationContext();
+			CharSequence text = "Left group: " + Globals.currentGroup + "!";
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+			
+			Globals.currentGroup = "";
+			setContentView(R.layout.activity_main);
     	}
     }
 }
