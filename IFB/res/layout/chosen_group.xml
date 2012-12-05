@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/groupNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="Group-name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/leaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/membersButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:onClick="leave"
+        android:text="Leave group" />
+
+    <Button
+        android:id="@+id/membersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupInvoiceButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="members"
+        android:text="Members" />
+
+    <Button
+        android:id="@+id/showInvoices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupNameTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:text="Show Invoices" />
+
+    <Button
+        android:id="@+id/groupInvoiceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/groupNameTextView"
+        android:layout_below="@+id/showInvoices"
+        android:onClick="sendGroupInvoice"
+        android:text="Send Invoice" />
+
+</RelativeLayout>

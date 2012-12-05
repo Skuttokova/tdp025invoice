@@ -275,6 +275,19 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	//TODO check if works
+	//Removes user from group
+	public Integer leaveGroup(String groupName, String userName){
+		int groupId = getGroupId(groupName);
+		int userId = getUserId(userName);
+		String query = "data={\"query\":\"DELETE FROM `UserInGroup` WHERE `groupId` = "+groupId+" AND `userId` = "+userId+"\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
+	}
+	
 	
 	public JSONObject sendQuery(String query){
 		//Add password
