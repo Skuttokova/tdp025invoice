@@ -57,6 +57,9 @@ public class NewGroup extends Activity {
 				mButton = (Button)findViewById(R.id.groupAddButton);
 				mButton.setEnabled(false);
 			}
+			else{
+				dialogMessage("Error!","Could not create the group at the moment! Please try again later.");
+			}
 		}
     }
     	
@@ -79,7 +82,7 @@ public class NewGroup extends Activity {
 		else{
 			String userName = mUser.getText().toString();
 			
-			//TODO add check to see if user exists
+			//add check to see if user exists
 			if(db.getUserId(userName) != null){
 			
 				//Add user to group
@@ -96,7 +99,7 @@ public class NewGroup extends Activity {
 					mUser.setText("");
 				}
 				else{
-					dialogMessage("Error!","Could not add user to group! Please try again later.");
+					dialogMessage("Error!","Could not add user to the group at the moment! Please try again later.");
 				}
 			}
 			else{

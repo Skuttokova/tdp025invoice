@@ -34,38 +34,57 @@ public class SendInvoice extends Activity {
     	toText = mEdit.getText().toString();
     	amount = aEdit.getText().toString();
     	desc = dEdit.getText().toString();
-    	if(toText.equals("Username") || amount.equals("0.0") || desc.equals("")){
-    		final Context context = this;
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-	 
-				// set title
-				alertDialogBuilder.setTitle("Please enter correct data");
-	 
-				// set dialog message
-				alertDialogBuilder
-					.setMessage("Add correct data!")
-					.setCancelable(false)
-					.setPositiveButton("OK!",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							dialog.cancel();
-						}
-					  });
-	 
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					// show it
-					alertDialog.show();
-    		
-    		
+    	
+    	if(toText != "" && amount != "0.0" && desc != ""){
+    		double amountToDouble = Double.parseDouble(amount);
+    		if(db.getUserId(toText) != null){
+	    		/*if(db.addPrivInvoice(toText, amountToDouble, desc) != null){
+	    		
+					//Show toast
+					Context context = getApplicationContext();
+					CharSequence text = "Invoice sent to " + toText;
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+		    		
+		    		mEdit.setText("");
+		    		dEdit.setText("");
+		    		aEdit.setText("");
+	    		}
+	    		else{
+	    			dialogMessage("Send error", "Could not send invoice at the moment, please try again later.")
+	    		}*/
+    		}
+    		else{
+    			dialogMessage("Username error", "User does not exist!");
+    		}
     	}
     	else{
-    		
-    		double amountToDouble = Double.parseDouble(amount);
-    		db.addInvoice(mEdit.getText().toString(), amountToDouble, dEdit.getText().toString());
-    		mEdit.setText("");
-    		dEdit.setText("");
-    		aEdit.setText("");
+    		dialogMessage("Empty field", "Please dont leave any field empty!");
     	}
     }
+    
+	public void dialogMessage(String title, String message){
+		final Context context = this;
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+ 
+			// set title
+			alertDialogBuilder.setTitle(title);
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage(message)
+				.setCancelable(false)
+				.setPositiveButton("Okey",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					}
+				  });
+ 
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+ 
+				// show it
+				alertDialog.show();
+	}
 }

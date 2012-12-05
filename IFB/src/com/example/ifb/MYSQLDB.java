@@ -159,6 +159,17 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	public Integer addPrivInvoice(String userName, Double amount, String desc, String senderName){
+		int id = getUserId(userName);
+		int senderId = getUserId(senderName);
+		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+-1+",'"+desc+"',"+senderId+")\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
+	}
+	
 	
 	public JSONObject sendQuery(String query){
 		//Add password

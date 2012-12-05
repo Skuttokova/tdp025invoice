@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
         		else
         		{
         			//skicka username och password till databasen och kolla ifall man f�r logga in
+        			
+        			Globals.clientName = username;
         			setContentView(R.layout.activity_main);
         		}
         	
