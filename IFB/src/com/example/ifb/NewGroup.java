@@ -44,13 +44,8 @@ public class NewGroup extends Activity {
 				
 				//add self to group
 				db.addUserToGroup(Globals.clientName,groupName);
-				
-				//Show toast
-				Context context = getApplicationContext();
-				CharSequence text = "Group created!";
-				int duration = Toast.LENGTH_SHORT;
-	
-				Toast toast = Toast.makeText(context, text, duration);
+		
+				Toast toast = Toast.makeText(getApplicationContext(), "Group created!", Toast.LENGTH_SHORT);
 				toast.show();
 				
 				//Disable button
@@ -88,12 +83,7 @@ public class NewGroup extends Activity {
 			
 				//Add user to group
 				if(db.addUserToGroup(userName, groupName) != null){
-					//Show toast
-					Context context = getApplicationContext();
-					CharSequence text = "User added to group";
-					int duration = Toast.LENGTH_SHORT;
-		
-					Toast toast = Toast.makeText(context, text, duration);
+					Toast toast = Toast.makeText(getApplicationContext(), "User added to group", Toast.LENGTH_SHORT);
 					toast.show();
 					
 					//Clear edittext field

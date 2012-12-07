@@ -44,12 +44,8 @@ public class SendInvoice extends Activity {
     			mButton = (Button) findViewById(R.id.sendInvoiceButton);
     			mButton.setEnabled(false);
 	    		if(db.addPrivInvoice(toText, amountToDouble, desc, Globals.clientName) != null){
-	    		
-					//Show toast
-					Context context = getApplicationContext();
-					CharSequence text = "Invoice sent to " + toText;
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(context, text, duration);
+
+					Toast toast = Toast.makeText(getApplicationContext(), "Invoice sent to " + toText, Toast.LENGTH_SHORT);
 					toast.show();
 		    		
 		    		mEdit.setText("");

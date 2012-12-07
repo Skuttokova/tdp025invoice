@@ -48,11 +48,7 @@ public class SendGroupInvoice extends Activity {
 	    			mButton.setEnabled(false);
 		    		if(db.addInvoice(groupName, amountToDouble, desc, Globals.clientName) != null){
 		    		
-						//Show toast
-						Context context = getApplicationContext();
-						CharSequence text = "Invoice sent to " + groupName;
-						int duration = Toast.LENGTH_SHORT;
-						Toast toast = Toast.makeText(context, text, duration);
+						Toast toast = Toast.makeText(getApplicationContext(), "Invoice sent to " + groupName, Toast.LENGTH_SHORT);
 						toast.show();
 			    		
 			    		dEdit.setText("");
