@@ -355,6 +355,8 @@ public class MYSQLDB {
 		else
 			return null;
 	}
+	
+	//public Integer 
 //-----------------------Removers/Updaters-End-----------------------
 	
 	public JSONObject sendQuery(String query){
