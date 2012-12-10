@@ -55,7 +55,8 @@ public class MainActivity extends Activity {
         			Globals.clientName = username;
         			setContentView(R.layout.activity_main);
         		}
-        	
+        		MYSQLDB db = new MYSQLDB();
+        		db.getUnpaidInvoices(username);
         	}
         	
         	
