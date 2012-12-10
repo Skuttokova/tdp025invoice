@@ -207,7 +207,7 @@ public class MYSQLDB {
 	//Get id of users who got invoice  
 	public Integer[] getUserWhoGotInvoice(Integer invoiceId){
 		
-		String query = "data={\"query\":\"SELECT * FROM `UsersInvoices` WHERE invoiceId="+invoiceId+"\"}";
+		String query = "data={\"query\":\"SELECT * FROM `UsersInvoices` WHERE invoiceId="+invoiceId+" AND `paid`!=0\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
@@ -356,7 +356,30 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	//public Integer 
+	//TODO test
+	//Update invoice 
+	public Integer userPaidInvoice(Integer invoiceId, Integer userId){
+		
+		String query = "data={\"query\":\"UPDATE `UsersInvoices` SET `paid`=1 WHERE `invoiceId`="+invoiceId+" AND `userId="+userId+"\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			if(getUserWhoGotInvoice(invoiceId).length == 0){
+				//Update invoice to fullypaid
+				String query2 = "data={\"query\":\"UPDATE `Invoice` SET `paid`=1 WHERE `id`="+invoiceId+"\"}";
+				JSONObject json2 = sendQuery(query2);
+				if(checkSuccess(json2))
+					//Update completed and fullypaid original invoice
+					return 1;
+				else
+					return null;
+			}
+			
+			//Not fully paid, but update completed
+			return 1;
+		}
+		else
+			return null;
+	}
 //-----------------------Removers/Updaters-End-----------------------
 	
 	public JSONObject sendQuery(String query){
