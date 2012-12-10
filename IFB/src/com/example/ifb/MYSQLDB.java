@@ -208,7 +208,6 @@ public class MYSQLDB {
 	public Integer[] getUserWhoGotInvoice(Integer invoiceId){
 		
 		String query = "data={\"query\":\"SELECT * FROM `UsersInvoices` WHERE invoiceId="+invoiceId+" AND `paid`=0\"}";
-		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try{
@@ -230,10 +229,43 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	/*public HashMap[] getInvoices (String userName){
+	//TODO test
+	public HashMap[] getUnpaidInvoices (String userName){
 		int userId = getUserId(userName);
-		String query = "data={\"query\":\"SELECT invoiceId FROM `UsersInvoices` WHERE userId="+userId+" AND `paid`=0\"}";
-	}*/
+		String query = "data={\"query\":\"SELECT `invoiceId` FROM `UsersInvoices` WHERE userId="+userId+" AND `paid`=0\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			JSONArray jsonArray;
+			try {
+				jsonArray = json.getJSONArray("result");
+				HashMap[] invoices = new HashMap[jsonArray.length()];
+				//For each invoice sent to user
+				for(int i=0; i<jsonArray.length();i++){
+					int id = Integer.parseInt(jsonArray.getJSONObject(i).getString("invoiceId"));
+					String query2 = "data={\"query\":\"SELECT * FROM `Invoice` WHERE id="+id+"\"}";
+					JSONObject json2 = sendQuery(query2);
+					if(checkSuccess(json2)){
+						JSONArray jsonArray2 = json2.getJSONArray("result");
+						HashMap map = new HashMap();
+						map.put("id",Integer.parseInt(jsonArray.getJSONObject(i).getString("id")));
+						map.put("amount",jsonArray.getJSONObject(i).getString("amount"));
+						map.put("description",jsonArray.getJSONObject(i).getString("description"));
+						map.put("fromId",jsonArray.getJSONObject(i).getString("fromUserId"));
+						invoices[i] = map;
+					}
+					else
+						return null;	
+				}
+				return invoices;
+			} 
+			catch (JSONException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
 //-----------------------Getters-End-----------------------	
 	
 //-----------------------Adders-Start-----------------------
