@@ -207,7 +207,7 @@ public class MYSQLDB {
 	//Get id of users who got invoice  
 	public Integer[] getUserWhoGotInvoice(Integer invoiceId){
 		
-		String query = "data={\"query\":\"SELECT * FROM `UsersInvoices` WHERE invoiceId="+invoiceId+" AND `paid`!=0\"}";
+		String query = "data={\"query\":\"SELECT * FROM `UsersInvoices` WHERE invoiceId="+invoiceId+" AND `paid`=0\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
@@ -229,6 +229,11 @@ public class MYSQLDB {
 		else
 			return null;
 	}
+	
+	/*public HashMap[] getInvoices (String userName){
+		int userId = getUserId(userName);
+		String query = "data={\"query\":\"SELECT invoiceId FROM `UsersInvoices` WHERE userId="+userId+" AND `paid`=0\"}";
+	}*/
 //-----------------------Getters-End-----------------------	
 	
 //-----------------------Adders-Start-----------------------
