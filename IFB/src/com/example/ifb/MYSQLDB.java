@@ -164,7 +164,6 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	//TODO test
 	//Get invoices you've sent
 	public HashMap[] getInvoicesSent(String userName){
 		int userId = getUserId(userName);
@@ -229,7 +228,6 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	//TODO test
 	public HashMap[] getUnpaidInvoices (String userName){
 		int userId = getUserId(userName);
 		String query = "data={\"query\":\"SELECT `invoiceId` FROM `UsersInvoices` WHERE userId="+userId+" AND `paid`=0\"}";
@@ -247,10 +245,10 @@ public class MYSQLDB {
 					if(checkSuccess(json2)){
 						JSONArray jsonArray2 = json2.getJSONArray("result");
 						HashMap map = new HashMap();
-						map.put("id",Integer.parseInt(jsonArray.getJSONObject(i).getString("id")));
-						map.put("amount",jsonArray.getJSONObject(i).getString("amount"));
-						map.put("description",jsonArray.getJSONObject(i).getString("description"));
-						map.put("fromId",jsonArray.getJSONObject(i).getString("fromUserId"));
+						map.put("id",Integer.parseInt(jsonArray2.getJSONObject(i).getString("id")));
+						map.put("amount",Double.parseDouble(jsonArray2.getJSONObject(i).getString("amount")));
+						map.put("description",jsonArray2.getJSONObject(i).getString("description"));
+						map.put("fromId",Integer.parseInt(jsonArray2.getJSONObject(i).getString("fromUserId")));
 						invoices[i] = map;
 					}
 					else
