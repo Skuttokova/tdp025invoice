@@ -140,7 +140,7 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	//Get groups that user is a member of
+	//Get info of group
 	public HashMap getGroupInfo(Integer groupId){
 		
 		String query = "data={\"query\":\"SELECT * FROM `Group` WHERE id="+groupId+"\"}";
@@ -148,12 +148,78 @@ public class MYSQLDB {
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try{
-			JSONArray jsonArray = json.getJSONArray("result");
-			HashMap map = new HashMap();
-			map.put("id",Integer.parseInt(jsonArray.getJSONObject(0).getString("id")));
-			map.put("name",jsonArray.getJSONObject(0).getString("name"));
+				JSONArray jsonArray = json.getJSONArray("result");
+				HashMap map = new HashMap();
+				map.put("id",Integer.parseInt(jsonArray.getJSONObject(0).getString("id")));
+				map.put("name",jsonArray.getJSONObject(0).getString("name"));
+				
+				return map;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
+	//TODO test
+	//Get invoices you've sent
+	public HashMap[] getInvoicesSent(String userName){
+		int userId = getUserId(userName);
+		String query = "data={\"query\":\"SELECT * FROM `Invoice` WHERE fromUserId="+userId+" and paid=0\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+				JSONArray jsonArray = json.getJSONArray("result");
+				
+				HashMap[] invoiceMap = new HashMap[jsonArray.length()];
+				for(int i=0; i<jsonArray.length(); i++){
+					
+					//Get group-info from groupId
+					HashMap map = new HashMap();
+					map.put("id",Integer.parseInt(jsonArray.getJSONObject(i).getString("id")));
+					map.put("amount",jsonArray.getJSONObject(i).getString("amount"));
+					map.put("description",jsonArray.getJSONObject(i).getString("description"));
+					
+					Integer invoiceId = (Integer) map.get("id");
+					Integer[] users = getUserWhoGotInvoice(invoiceId);
+					
+					//Add users who got invoice
+					for(int j=0; j<users.length; j++)
+						map.put("user"+j,users[j]);
+					invoiceMap[i] = map;
+				}
+				return invoiceMap;
 			
-			return map;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
+	//Get id of users who got invoice  
+	public Integer[] getUserWhoGotInvoice(Integer invoiceId){
+		
+		String query = "data={\"query\":\"SELECT * FROM `UsersInvoices` WHERE invoiceId="+invoiceId+"\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+				JSONArray jsonArray = json.getJSONArray("result");
+				
+				Integer[] idArray = new Integer[jsonArray.length()];
+				for(int i=0; i<jsonArray.length(); i++){
+					idArray[i] = Integer.parseInt(jsonArray.getJSONObject(0).getString("userId"));
+				}
+				
+				return idArray;
 			}
 			catch(JSONException e){
 				e.printStackTrace();

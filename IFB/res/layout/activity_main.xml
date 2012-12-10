@@ -4,16 +4,6 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/createGroupButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
-        android:text="Create Group" 
-        android:onClick="newGroup"/>
-
-    <Button
         android:id="@+id/chooseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,13 +22,32 @@
         android:onClick="sendInvoice" />
 
     <Button
+        android:id="@+id/createGroupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:onClick="newGroup"
+        android:text="Create Group" />
+
+    <Button
         android:id="@+id/exitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="67dp"
+        android:onClick="exit"
+        android:text="Exit" />
+
+    <Button
+        android:id="@+id/manageInvoicesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/createInvoiceButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="Exit" 
-        android:onClick="exit" />
+        android:text="Manage Invoices" 
+        android:onClick="manageInvoices"/>
 
 </RelativeLayout>

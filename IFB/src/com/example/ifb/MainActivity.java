@@ -113,6 +113,11 @@ public class MainActivity extends Activity {
     	startActivityForResult(i, 0);
     }
     
+    public void manageInvoices(View view) {
+    	Intent i = new Intent(this, ManageInvoices.class);  
+    	startActivityForResult(i, 0);
+    }
+    
     public void exit(View view) {
     	System.exit(0);
     }
