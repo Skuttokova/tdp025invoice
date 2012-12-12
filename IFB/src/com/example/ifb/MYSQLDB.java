@@ -378,12 +378,30 @@ public class MYSQLDB {
 //-----------------------Adders-End-----------------------
 	
 //-----------------------Removers/Updaters-Start-----------------------
-	//TODO check if works
 	//Removes user from group
 	public Integer leaveGroup(String groupName, String userName){
 		int groupId = getGroupId(groupName);
 		int userId = getUserId(userName);
 		String query = "data={\"query\":\"DELETE FROM `UserInGroup` WHERE `groupId` = "+groupId+" AND `userId` = "+userId+"\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			//If group has no members, remove it
+			if(getGroupUsers(groupId).length < 1){
+				//Remove group
+				if(removeGroup(groupId) != null)
+					return 1;
+				else
+					return null;
+			}
+			else
+				return 1;
+		}
+		else
+			return null;
+	}
+	
+	public Integer removeGroup(Integer groupId){
+		String query = "data={\"query\":\"DELETE FROM `Group` WHERE `id` = "+groupId+"\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json))
 			return 1;

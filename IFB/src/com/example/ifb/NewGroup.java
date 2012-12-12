@@ -69,36 +69,38 @@ public class NewGroup extends Activity {
 			dialogMessage("Add group!","Please create a group before adding users!");
 		}
 		
-		//If no username added
-		if(mUser.getText().toString().equals("")){
-			dialogMessage("Add user!","Please write a username to add to the group!");
-		}
-		
-		//All clear, add user
 		else{
-			String userName = mUser.getText().toString();
+			//If no username added
+			if(mUser.getText().toString().equals("")){
+				dialogMessage("Add user!","Please write a username to add to the group!");
+			}
 			
-			//add check to see if user exists
-			if(db.getUserId(userName) != null){
-			
-				//Add user to group
-				if(db.addUserToGroup(userName, groupName) != null){
-					Toast toast = Toast.makeText(getApplicationContext(), "User added to group", Toast.LENGTH_SHORT);
-					toast.show();
-					
+			//All clear, add user
+			else{
+				String userName = mUser.getText().toString();
+				
+				//add check to see if user exists
+				if(db.getUserId(userName) != null){
+				
+					//Add user to group
+					if(db.addUserToGroup(userName, groupName) != null){
+						Toast toast = Toast.makeText(getApplicationContext(), "User added to group", Toast.LENGTH_SHORT);
+						toast.show();
+						
+						//Clear edittext field
+						mUser.setText("");
+					}
+					else{
+						dialogMessage("Error!","Could not add user to the group at the moment! Please try again later.");
+					}
+				}
+				else{
+					dialogMessage("User error!","User does not exist!");
 					//Clear edittext field
 					mUser.setText("");
 				}
-				else{
-					dialogMessage("Error!","Could not add user to the group at the moment! Please try again later.");
-				}
+					
 			}
-			else{
-				dialogMessage("User error!","User does not exist!");
-				//Clear edittext field
-				mUser.setText("");
-			}
-				
 		}
 	}
 	

@@ -24,15 +24,14 @@
             </intent-filter>
         </activity>
         
-        <activity
-            android:name=".ChooseGroup">
-        </activity>   
-        <activity
-            android:name=".NewGroup">
-        </activity>
-       	<activity
-            android:name=".SendInvoice">
-        </activity>
+        <activity android:name=".ChooseGroup" />
+        <activity android:name=".ChosenGroup" />
+        <activity android:name=".GroupInvoices" />
+        <activity android:name=".GroupMembers" />
+        <activity android:name=".ManageInvoices" />
+        <activity android:name=".NewGroup" />
+        <activity android:name=".SendGroupInvoice" />
+        <activity android:name=".SendInvoice" />
     </application>
 
 </manifest>

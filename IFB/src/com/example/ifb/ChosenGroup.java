@@ -6,6 +6,7 @@ import com.example.ifb.R.layout;
 
 import android.os.Bundle;
 import android.provider.Settings.Global;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,12 @@ public class ChosenGroup extends Activity {
         mTextView.setText(Globals.currentGroup);
 	}
     
+    @Override
+    public void onBackPressed() {
+        Globals.currentGroup = "";
+        this.finish();
+    }
+    
     
     public void showGroupInvoices(View view) {
     	Intent i = new Intent(this, GroupInvoices.class);  
@@ -44,6 +51,11 @@ public class ChosenGroup extends Activity {
     	startActivityForResult(i, 0);
     }
     
+    public void manageInvoices(View view) {
+    	Intent i = new Intent(this, ManageInvoices.class);  
+    	startActivityForResult(i, 0);
+    }
+    
     public void leaveGroup(View view) {
     	MYSQLDB db = new MYSQLDB();
     	if(db.leaveGroup(Globals.currentGroup, Globals.clientName) != null){
@@ -56,7 +68,8 @@ public class ChosenGroup extends Activity {
 			toast.show();
 			
 			Globals.currentGroup = "";
-			setContentView(R.layout.activity_main);
+            Intent intent = new Intent(ChosenGroup.this,ChooseGroup.class);
+            startActivity(intent);
     	}
     }
 }

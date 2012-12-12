@@ -53,10 +53,11 @@ public class MainActivity extends Activity {
         			//skicka username och password till databasen och kolla ifall man f�r logga in
         			
         			Globals.clientName = username;
-        			setContentView(R.layout.activity_main);
+        			
+        			//Globals.currentGroup = "Hejsan";
+                    Intent intent = new Intent(MainActivity.this,ChosenGroup.class);
+                    startActivity(intent);
         		}
-        		MYSQLDB db = new MYSQLDB();
-        		db.getUnpaidInvoices(username);
         	}
         	
         	
@@ -104,22 +105,4 @@ public class MainActivity extends Activity {
     	startActivityForResult(i, 0);
     }
     
-    public void chooseGroup(View view) {
-    	Intent i = new Intent(this, ChooseGroup.class);  
-    	startActivityForResult(i, 0);
-    }
-    
-    public void sendInvoice(View view) {
-    	Intent i = new Intent(this, SendInvoice.class);  
-    	startActivityForResult(i, 0);
-    }
-    
-    public void manageInvoices(View view) {
-    	Intent i = new Intent(this, ManageInvoices.class);  
-    	startActivityForResult(i, 0);
-    }
-    
-    public void exit(View view) {
-    	System.exit(0);
-    }
 }

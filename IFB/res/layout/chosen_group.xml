@@ -14,25 +14,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/leaveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/membersButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:onClick="leaveGroup"
-        android:text="Leave group" />
-
-    <Button
-        android:id="@+id/membersButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/groupInvoiceButton"
-        android:layout_centerHorizontal="true"
-        android:onClick="members"
-        android:text="Members" />
-
-    <Button
         android:id="@+id/showInvoices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,15 +21,48 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
         android:onClick="showGroupInvoices"
-        android:text="Show Invoices" />
+        android:text="Show Invoices"
+        android:width="@dimen/button_width" />
+
+    <Button
+        android:id="@+id/manageInvoicesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupInvoiceButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="manageInvoices"
+        android:text="Manage Invoices"
+        android:width="@dimen/button_width" />
+
+    <Button
+        android:id="@+id/leaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/groupInvoiceButton"
+        android:layout_below="@+id/membersButton"
+        android:layout_marginTop="30dp"
+        android:onClick="leaveGroup"
+        android:text="Leave group"
+        android:width="@dimen/button_width" />
+
+    <Button
+        android:id="@+id/membersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manageInvoicesButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="members"
+        android:text="Members"
+        android:width="@dimen/button_width" />
 
     <Button
         android:id="@+id/groupInvoiceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/groupNameTextView"
+        android:layout_alignLeft="@+id/showInvoices"
         android:layout_below="@+id/showInvoices"
         android:onClick="sendGroupInvoice"
-        android:text="Send Invoice" />
+        android:text="Send Invoice"
+        android:width="@dimen/button_width" />
 
 </RelativeLayout>
