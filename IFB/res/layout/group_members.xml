@@ -4,21 +4,57 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/groupMembersTextView"
+        android:id="@+id/membersOf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
-        android:text="Group members"
+        android:layout_marginTop="15dp"
+        android:text="Members of:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ListView
-        android:id="@+id/groupMembersListView"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/groupMembersTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/membersOf"
+        android:layout_centerHorizontal="true"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/groupMembersTextView"
-        android:layout_centerHorizontal="true" >
-    </ListView>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/groupMembersListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/groupMembersNameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/groupMembersAddNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupMembersNameField"
+        android:layout_centerHorizontal="true"
+        android:text="Add user"
+        android:width="@dimen/button_width" />
 
 </RelativeLayout>

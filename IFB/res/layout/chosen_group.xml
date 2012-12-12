@@ -14,17 +14,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/showInvoices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/groupNameTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:onClick="showGroupInvoices"
-        android:text="Show Invoices"
-        android:width="@dimen/button_width" />
-
-    <Button
         android:id="@+id/manageInvoicesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,23 +35,34 @@
         android:width="@dimen/button_width" />
 
     <Button
-        android:id="@+id/membersButton"
+        android:id="@+id/groupInvoiceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manageInvoicesButton"
-        android:layout_centerHorizontal="true"
-        android:onClick="members"
-        android:text="Members"
+        android:layout_alignLeft="@+id/manageInvoicesButton"
+        android:layout_below="@+id/groupNameTextView"
+        android:layout_marginTop="34dp"
+        android:onClick="sendGroupInvoice"
+        android:text="Send Invoice"
         android:width="@dimen/button_width" />
 
     <Button
-        android:id="@+id/groupInvoiceButton"
+        android:id="@+id/showInvoices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/manageInvoicesButton"
+        android:layout_below="@+id/manageInvoicesButton"
+        android:onClick="showGroupInvoices"
+        android:text="Show Total"
+        android:width="@dimen/button_width" />
+
+    <Button
+        android:id="@+id/membersButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/showInvoices"
         android:layout_below="@+id/showInvoices"
-        android:onClick="sendGroupInvoice"
-        android:text="Send Invoice"
+        android:onClick="members"
+        android:text="Members"
         android:width="@dimen/button_width" />
 
 </RelativeLayout>
