@@ -112,6 +112,27 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	public String[] getGroupUsersInfo(Integer groupId){
+		Integer[] userIdArray = getGroupUsers(groupId);
+		String[] userNames = new String[userIdArray.length];
+		for(int i = 0; i < userIdArray.length; i++){
+			String query = "data={\"query\":\"SELECT name FROM `Users` WHERE id="+userIdArray[i]+"\"}";
+			JSONObject json = sendQuery(query);
+			if(checkSuccess(json)){
+				try {
+					JSONArray jsonArray = json.getJSONArray("result");
+					userNames[i] = (String) jsonArray.getJSONObject(0).getString("name");
+				} catch (JSONException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+			else
+				return null;
+		}
+		return userNames;	
+	}
+	
 	//Get groups that user is a member of
 	public HashMap[] getUsersGroups(String userName){
 		Integer userid = getUserId(userName);
@@ -264,6 +285,23 @@ public class MYSQLDB {
 		else
 			return null;
 	}
+	
+	public Boolean isUserMemberOfGroup(Integer userId,Integer groupId){
+		String query = "data={\"query\":\"SELECT `id` FROM `UserInGroup` WHERE userId="+userId+" AND `groupId`="+groupId+"\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try {
+				JSONArray jsonArray = json.getJSONArray("result");
+				if(jsonArray.length() < 1)
+					return false;
+				else
+					return true;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 //-----------------------Getters-End-----------------------	
 	
 //-----------------------Adders-Start-----------------------
@@ -292,6 +330,10 @@ public class MYSQLDB {
 		int userId = getUserId(userName);
 		int groupId = getGroupId(groupName);
 		
+		//Check if already a member of group
+		if(isUserMemberOfGroup(userId, groupId))
+			return -1;
+		
 		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+")\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json))
@@ -302,6 +344,9 @@ public class MYSQLDB {
 	
 	//Uses ids from parameters
 	public Integer addUserToGroup(Integer userId, Integer groupId){
+		//Check if already a member of group
+		if(isUserMemberOfGroup(userId, groupId))
+			return -1;
 		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+")\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json))
