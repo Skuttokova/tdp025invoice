@@ -23,8 +23,7 @@ public class GroupMembers extends Activity {
         TextView mTextView = (TextView) findViewById(R.id.groupMembersTextView);
         mTextView.setText(Globals.currentGroup);
         
-       // String[] members = db.getGroupUsersInfo(db.getGroupId(Globals.currentGroup));
-        String[] members = new String[] {"member","member","member","member","member","member","member"};
+        String[] members = db.getGroupUsersInfo(db.getGroupId(Globals.currentGroup));
         
         
         ListView lv = (ListView) findViewById(R.id.groupMembersListView);
