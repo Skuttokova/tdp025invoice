@@ -383,7 +383,7 @@ public class MYSQLDB {
 		int senderId = getUserId(senderName);
 		String uniqueId = UUID.randomUUID().toString();
 		//Add Invoice
-		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+groupId+",'"+desc+"',"+senderId+",'"+uniqueId+"')\"}";
+		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+groupId+",'"+desc+"',"+senderId+",'"+uniqueId+"','0')\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try {

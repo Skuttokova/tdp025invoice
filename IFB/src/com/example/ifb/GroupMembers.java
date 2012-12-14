@@ -15,6 +15,8 @@ import android.content.DialogInterface;
 
 public class GroupMembers extends Activity {
     MYSQLDB db = new MYSQLDB();
+    String[] members;
+    ListView lv;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,10 +25,10 @@ public class GroupMembers extends Activity {
         TextView mTextView = (TextView) findViewById(R.id.groupMembersTextView);
         mTextView.setText(Globals.currentGroup);
         
-        String[] members = db.getGroupUsersInfo(db.getGroupId(Globals.currentGroup));
+        members = db.getGroupUsersInfo(db.getGroupId(Globals.currentGroup));
         
         
-        ListView lv = (ListView) findViewById(R.id.groupMembersListView);
+        lv = (ListView) findViewById(R.id.groupMembersListView);
         ArrayAdapter<String> arrayAdapter =      
         new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, members);
         lv.setAdapter(arrayAdapter);
@@ -55,6 +57,14 @@ public class GroupMembers extends Activity {
 					
 					//Clear edittext field
 					mUser.setText("");
+					
+					//Refresh
+			        members = db.getGroupUsersInfo(db.getGroupId(Globals.currentGroup));
+			        
+			        lv = (ListView) findViewById(R.id.groupMembersListView);
+			        ArrayAdapter<String> arrayAdapter =      
+			        new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, members);
+			        lv.setAdapter(arrayAdapter);
 				}
 				else if(db.addUserToGroup(userName, Globals.currentGroup) == -1){
 					dialogMessage("Error!","User already a member of the group!");
