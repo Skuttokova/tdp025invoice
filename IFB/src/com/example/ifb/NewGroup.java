@@ -44,7 +44,7 @@ public class NewGroup extends Activity {
 				
 				//add self to group
 				db.addUserToGroup(Globals.clientName,groupName);
-		
+
 				Toast toast = Toast.makeText(getApplicationContext(), "Group created!", Toast.LENGTH_SHORT);
 				toast.show();
 				
@@ -83,14 +83,14 @@ public class NewGroup extends Activity {
 				if(db.getUserId(userName) != null){
 				
 					//Add user to group
-					if(db.addUserToGroup(userName, groupName) != 1){
+					if(db.addUserToGroup(userName, groupName) == 1){
 						Toast toast = Toast.makeText(getApplicationContext(), "User added to group", Toast.LENGTH_SHORT);
 						toast.show();
 						
 						//Clear edittext field
 						mUser.setText("");
 					}
-					else if(db.addUserToGroup(userName, Globals.currentGroup) == -1){
+					else if(db.addUserToGroup(userName, groupName) == -1){
 						dialogMessage("Error!","User already a member of the group!");
 					}
 					else{

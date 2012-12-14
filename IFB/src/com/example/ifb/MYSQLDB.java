@@ -134,7 +134,7 @@ public class MYSQLDB {
 	}
 	
 	//Get groups that user is a member of
-	public HashMap[] getUsersGroups(String userName){
+	public String[] getUsersGroups(String userName){
 		Integer userid = getUserId(userName);
 		String query = "data={\"query\":\"SELECT * FROM `UserInGroup` WHERE userId="+userid+"\"}";
 		
@@ -143,7 +143,7 @@ public class MYSQLDB {
 			try{
 			JSONArray jsonArray = json.getJSONArray("result");
 			
-			HashMap[] groupMap = new HashMap[jsonArray.length()];
+			String[] groupMap = new String[jsonArray.length()];
 			for(int i=0; i<jsonArray.length(); i++){
 				
 				//Get group-info from groupId
@@ -162,7 +162,7 @@ public class MYSQLDB {
 	}
 	
 	//Get info of group
-	public HashMap getGroupInfo(Integer groupId){
+	public String getGroupInfo(Integer groupId){
 		
 		String query = "data={\"query\":\"SELECT * FROM `Group` WHERE id="+groupId+"\"}";
 		
@@ -170,11 +170,7 @@ public class MYSQLDB {
 		if(checkSuccess(json)){
 			try{
 				JSONArray jsonArray = json.getJSONArray("result");
-				HashMap map = new HashMap();
-				map.put("id",Integer.parseInt(jsonArray.getJSONObject(0).getString("id")));
-				map.put("name",jsonArray.getJSONObject(0).getString("name"));
-				
-				return map;
+				return jsonArray.getJSONObject(0).getString("name");
 			}
 			catch(JSONException e){
 				e.printStackTrace();

@@ -54,8 +54,8 @@ public class MainActivity extends Activity {
         			
         			Globals.clientName = username;
         			
-        			Globals.currentGroup = "Hejsan";
-                    Intent intent = new Intent(MainActivity.this,ChosenGroup.class);
+        			//Globals.currentGroup = "Hejsan";
+                    Intent intent = new Intent(MainActivity.this,ChooseGroup.class);
                     startActivity(intent);
         		}
         	}

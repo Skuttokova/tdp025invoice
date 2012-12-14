@@ -12,14 +12,33 @@
         android:layout_marginTop="37dp"
         android:text="Choose Group"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ListView
-        android:id="@+id/groupList"
-        android:layout_width="match_parent"
+    
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="14dp" >
-    </ListView>
+        android:orientation="vertical" >
+
+	    <ListView
+	        android:id="@+id/groupList"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/textView1"
+	        android:layout_marginTop="14dp" >
+	    </ListView>
+	</LinearLayout>
+	
+    <Button
+        android:id="@+id/addGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:text="Add group"
+        android:onClick="addGroup"
+        android:width="@dimen/button_width" />
 
 </RelativeLayout>
