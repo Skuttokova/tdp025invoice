@@ -13,15 +13,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ChooseGroup extends Activity{
+	
+	ListView lv;
+	String[] groupArray;
+	MYSQLDB db;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_group);
-        String[] groupArray;
-        final MYSQLDB db = new MYSQLDB();
-        groupArray = db.getUsersGroups(Globals.clientName); //get hashmap of users groups
         
-        final ListView lv = (ListView) findViewById(R.id.groupList);
+        db = new MYSQLDB();
+        groupArray = db.getUsersGroups(Globals.clientName); //get array of users groups
+        
+        lv = (ListView) findViewById(R.id.groupList);
         ArrayAdapter<String> arrayAdapter =      
         new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, groupArray);
         lv.setAdapter(arrayAdapter);
@@ -38,6 +43,18 @@ public class ChooseGroup extends Activity{
             }
         });
     } 
+    
+    public void refresh(View view){
+    	groupArray = db.getUsersGroups(Globals.clientName); //get array of users groups
+    	
+        lv = (ListView) findViewById(R.id.groupList);
+        ArrayAdapter<String> arrayAdapter =      
+        new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, groupArray);
+        lv.setAdapter(arrayAdapter);
+        
+		Toast toast = Toast.makeText(getApplicationContext(), "Refresh!", Toast.LENGTH_SHORT);
+		toast.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

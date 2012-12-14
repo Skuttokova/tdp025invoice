@@ -41,4 +41,14 @@
         android:onClick="addGroup"
         android:width="@dimen/button_width" />
 
+    <Button
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:onClick="refresh"
+        android:text="Refresh" />
+
 </RelativeLayout>
