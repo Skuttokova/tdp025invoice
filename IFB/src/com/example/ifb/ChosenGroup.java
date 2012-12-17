@@ -37,7 +37,7 @@ public class ChosenGroup extends Activity {
     
     
     public void showGroupInvoices(View view) {
-    	Intent i = new Intent(this, GroupInvoices.class);  
+    	Intent i = new Intent(this, ShowTotal.class);  
     	startActivityForResult(i, 0);
     }
     

@@ -43,6 +43,28 @@ public class MYSQLDB {
 			return null;
 	}
 	
+	public String getUserName(Integer id){
+		String query = "data={\"query\":\"SELECT name FROM `Users` WHERE id="+id+"\"}";
+		
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			String name = null;
+			//get value from id
+			name = jsonArray.getJSONObject(0).getString("name");
+			
+			return name;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
 	public Integer getInvoiceId(String uniqueId){
 		String query = "data={\"query\":\"SELECT id FROM `Invoice` WHERE uniqueId='"+uniqueId+"'\"}";
 		
@@ -273,8 +295,9 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	public HashMap[] getUnpaidInvoices (String userName){
+	public HashMap[] getUnpaidInvoices (String userName, String groupName){
 		int userId = getUserId(userName);
+		int groupId = getGroupId(groupName);
 		String query = "data={\"query\":\"SELECT `invoiceId` FROM `UsersInvoices` WHERE userId="+userId+" AND `paid`=0\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
@@ -285,19 +308,21 @@ public class MYSQLDB {
 				//For each invoice sent to user
 				for(int i=0; i<jsonArray.length();i++){
 					int id = Integer.parseInt(jsonArray.getJSONObject(i).getString("invoiceId"));
-					String query2 = "data={\"query\":\"SELECT * FROM `Invoice` WHERE id="+id+"\"}";
-					JSONObject json2 = sendQuery(query2);
-					if(checkSuccess(json2)){
-						JSONArray jsonArray2 = json2.getJSONArray("result");
-						HashMap map = new HashMap();
-						map.put("id",Integer.parseInt(jsonArray2.getJSONObject(i).getString("id")));
-						map.put("amount",Double.parseDouble(jsonArray2.getJSONObject(i).getString("amount")));
-						map.put("description",jsonArray2.getJSONObject(i).getString("description"));
-						map.put("fromId",Integer.parseInt(jsonArray2.getJSONObject(i).getString("fromUserId")));
-						invoices[i] = map;
+					if(isInvoiceApartOfGroup(id,groupId) == 1){
+						String query2 = "data={\"query\":\"SELECT * FROM `Invoice` WHERE id="+id+"\"}";
+						JSONObject json2 = sendQuery(query2);
+						if(checkSuccess(json2)){
+							JSONArray jsonArray2 = json2.getJSONArray("result");
+							HashMap map = new HashMap();
+							map.put("id",Integer.parseInt(jsonArray2.getJSONObject(0).getString("id")));
+							map.put("amount",Double.parseDouble(jsonArray2.getJSONObject(0).getString("amount")));
+							map.put("description",jsonArray2.getJSONObject(0).getString("description"));
+							map.put("fromId",Integer.parseInt(jsonArray2.getJSONObject(0).getString("fromUserId")));
+							invoices[i] = map;
+						}
+						else
+							return null;
 					}
-					else
-						return null;	
 				}
 				return invoices;
 			} 
@@ -336,6 +361,44 @@ public class MYSQLDB {
 		}
 		return MEMBER;
 	}
+	
+	public Integer isInvoiceApartOfGroup(Integer invoiceId, Integer groupId){
+		String query = "data={\"query\":\"SELECT * FROM `Invoice` WHERE id="+invoiceId+" AND `groupId`="+groupId+"\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try {
+				JSONArray jsonArray = json.getJSONArray("result");
+				if(jsonArray.length() < 1)
+					return -1;
+				else
+					return 1;
+			}
+			catch (JSONException e) {
+				e.printStackTrace();
+				return -1;
+			}
+		}
+		return -1;
+	}
+	
+	public Double getTotal(String groupName){
+		int groupId = getGroupId(groupName);
+		String query = "data={\"query\":\"SELECT SUM(amount) FROM `Invoice` WHERE groupId="+groupId+" AND `paid`='0'\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try {
+				JSONArray jsonArray = json.getJSONArray("result");
+				return (Double) jsonArray.getJSONObject(0).getDouble("SUM(amount)");
+			}
+			catch (JSONException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return null;
+	}
+	
 //-----------------------Getters-End-----------------------	
 	
 //-----------------------Adders-Start-----------------------

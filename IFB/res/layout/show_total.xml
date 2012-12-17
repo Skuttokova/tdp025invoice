@@ -14,13 +14,29 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/showTotalTitle"
+        android:layout_below="@+id/totalTextView"
         android:orientation="vertical" >
 
+        <ListView
+            android:id="@+id/payersListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/totalTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/showTotalTitle"
+        android:layout_centerHorizontal="true"
+        android:text="Total: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
