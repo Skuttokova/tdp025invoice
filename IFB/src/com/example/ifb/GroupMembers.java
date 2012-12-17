@@ -51,8 +51,8 @@ public class GroupMembers extends Activity {
 			if(db.getUserId(userName) != null){
 			
 				//Add user to group
-				if(db.addUserToGroup(userName, Globals.currentGroup) == 1){
-					Toast toast = Toast.makeText(getApplicationContext(), "User added to group", Toast.LENGTH_SHORT);
+				if(db.addUserToGroup(userName, Globals.currentGroup, 0) == 1){
+					Toast toast = Toast.makeText(getApplicationContext(), "Invite sent to user!", Toast.LENGTH_SHORT);
 					toast.show();
 					
 					//Clear edittext field
@@ -66,7 +66,7 @@ public class GroupMembers extends Activity {
 			        new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, members);
 			        lv.setAdapter(arrayAdapter);
 				}
-				else if(db.addUserToGroup(userName, Globals.currentGroup) == -1){
+				else if(db.addUserToGroup(userName, Globals.currentGroup, 0) == -1){
 					dialogMessage("Error!","User already a member of the group!");
 				}
 				else{

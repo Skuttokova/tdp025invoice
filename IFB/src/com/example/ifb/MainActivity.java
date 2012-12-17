@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        
         Button login = (Button)findViewById(R.id.login_button);
         
         login.setOnClickListener(new OnClickListener()

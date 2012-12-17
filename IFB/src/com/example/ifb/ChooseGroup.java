@@ -1,6 +1,9 @@
 package com.example.ifb;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +20,7 @@ public class ChooseGroup extends Activity{
 	ListView lv;
 	String[] groupArray;
 	MYSQLDB db;
+	String[] invites;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,47 @@ public class ChooseGroup extends Activity{
                 startActivity(intent);
             }
         });
+        
+        getInvites();
     } 
+    
+    public void getInvites(){
+        invites = db.getGroupInvites(Globals.clientName);
+        for(int i = 0; i < invites.length; i++){
+        	setAcceptance(invites[i]);
+        }
+    }
+    
+	public void setAcceptance(final String groupName){
+		final Context context = this;
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+ 
+			// set title
+			alertDialogBuilder.setTitle("New group invite!");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("You have been invited to the group: "+groupName+".")
+				.setCancelable(false)
+				.setNegativeButton("Decline", new DialogInterface.OnClickListener() {					
+					public void onClick(DialogInterface dialog, int which) {
+						db.updateAccepted(Globals.clientName, groupName, -1);
+						dialog.cancel();
+					}
+				})
+				.setPositiveButton("Accept",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						db.updateAccepted(Globals.clientName, groupName, 1);
+						dialog.cancel();
+					}
+				  });
+ 
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+ 
+				// show it
+				alertDialog.show();
+	}
     
     public void refresh(View view){
     	groupArray = db.getUsersGroups(Globals.clientName); //get array of users groups
@@ -54,6 +98,8 @@ public class ChooseGroup extends Activity{
         
 		Toast toast = Toast.makeText(getApplicationContext(), "Refresh!", Toast.LENGTH_SHORT);
 		toast.show();
+		
+		getInvites();
     }
 
     @Override

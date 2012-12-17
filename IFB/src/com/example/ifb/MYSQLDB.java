@@ -89,7 +89,7 @@ public class MYSQLDB {
 	
 	//Gets users in specific group
 	public Integer[] getGroupUsers(Integer groupId){
-		String query = "data={\"query\":\"SELECT userId FROM `UserInGroup` WHERE groupId="+groupId+"\"}";
+		String query = "data={\"query\":\"SELECT userId FROM `UserInGroup` WHERE groupId="+groupId+" AND accepted=1\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
@@ -135,22 +135,22 @@ public class MYSQLDB {
 	
 	//Get groups that user is a member of
 	public String[] getUsersGroups(String userName){
-		Integer userid = getUserId(userName);
-		String query = "data={\"query\":\"SELECT * FROM `UserInGroup` WHERE userId="+userid+"\"}";
+		Integer userId = getUserId(userName);
+		String query = "data={\"query\":\"SELECT * FROM `UserInGroup` WHERE userId="+userId+" AND accepted=1\"}";
 		
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try{
 			JSONArray jsonArray = json.getJSONArray("result");
 			
-			String[] groupMap = new String[jsonArray.length()];
+			String[] groupArray = new String[jsonArray.length()];
 			for(int i=0; i<jsonArray.length(); i++){
 				
 				//Get group-info from groupId
-				groupMap[i] = getGroupInfo(Integer.parseInt(jsonArray.getJSONObject(i).getString("groupId")));
+				groupArray[i] = getGroupInfo(Integer.parseInt(jsonArray.getJSONObject(i).getString("groupId")));
 			}
 			
-			return groupMap;
+			return groupArray;
 			}
 			catch(JSONException e){
 				e.printStackTrace();
@@ -159,6 +159,34 @@ public class MYSQLDB {
 		}
 		else
 			return null;
+	}
+	
+	//See all new group invites
+	public String[] getGroupInvites(String userName){
+		Integer userId = getUserId(userName);
+		String query = "data={\"query\":\"SELECT * FROM `UserInGroup` WHERE userId="+userId+" AND accepted=0\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json)){
+			try{
+			JSONArray jsonArray = json.getJSONArray("result");
+			
+			String[] groupArray = new String[jsonArray.length()];
+			for(int i=0; i<jsonArray.length(); i++){
+				
+				//Get group-info from groupId
+				groupArray[i] = getGroupInfo(Integer.parseInt(jsonArray.getJSONObject(i).getString("groupId")));
+			}
+			
+			return groupArray;
+			}
+			catch(JSONException e){
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else{
+			return null;
+		}
 	}
 	
 	//Get info of group
@@ -322,7 +350,7 @@ public class MYSQLDB {
 	}
 	
 	//Looks up id from names
-	public Integer addUserToGroup(String userName, String groupName){
+	public Integer addUserToGroup(String userName, String groupName, int acceptance){
 		int userId = getUserId(userName);
 		int groupId = getGroupId(groupName);
 		
@@ -330,50 +358,10 @@ public class MYSQLDB {
 		if(isUserMemberOfGroup(userId, groupId))
 			return -1;
 		
-		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+")\"}";
+		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+",'"+acceptance+"')\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json))
 			return 1;
-		else
-			return null;
-	}
-	
-	//Uses ids from parameters
-	public Integer addUserToGroup(Integer userId, Integer groupId){
-		//Check if already a member of group
-		if(isUserMemberOfGroup(userId, groupId))
-			return -1;
-		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+")\"}";
-		JSONObject json = sendQuery(query);
-		if(checkSuccess(json))
-			return 1;
-		else
-			return null;
-	}
-	
-	public Integer addPrivInvoice(String userName, Double amount, String desc, String senderName){
-		int id = getUserId(userName);
-		int senderId = getUserId(senderName);
-		String uniqueId = UUID.randomUUID().toString();
-		//Add Invoice
-		String query = "data={\"query\":\"INSERT INTO `Invoice` VALUES('',"+amount+","+-1+",'"+desc+"',"+senderId+",'"+uniqueId+"')\"}";
-		JSONObject json = sendQuery(query);
-		if(checkSuccess(json)){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			Integer invoiceId  = getInvoiceId(uniqueId);
-			//Add to UsersInvoices
-			query = "data={\"query\":\"INSERT INTO `UsersInvoices` VALUES('',"+invoiceId+","+id+","+0+")\"}";
-			json = sendQuery(query);
-			if(checkSuccess(json))
-				return 1;
-			else
-				return null;
-		}
 		else
 			return null;
 	}
@@ -443,6 +431,18 @@ public class MYSQLDB {
 	
 	public Integer removeGroup(Integer groupId){
 		String query = "data={\"query\":\"DELETE FROM `Group` WHERE `id` = "+groupId+"\"}";
+		JSONObject json = sendQuery(query);
+		if(checkSuccess(json))
+			return 1;
+		else
+			return null;
+	}
+	
+	//Updates if user has accepted or declined group invite
+	public Integer updateAccepted(String userName, String groupName, int choice){
+		int userId = getUserId(userName);
+		int groupId = getGroupId(groupName);
+		String query = "data={\"query\":\"UPDATE `UserInGroup` SET `accepted`="+choice+" WHERE `userId`="+userId+" AND `groupId`="+groupId+"\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json))
 			return 1;

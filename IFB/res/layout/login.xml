@@ -3,15 +3,6 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
-     
-        
-        <TextView android:id="@+id/usernameText"
-             android:text="Username:"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerHorizontal="true"
-            />
         <EditText android:id="@+id/username"
             android:layout_height="wrap_content"
             android:layout_width="250px"
@@ -42,5 +33,22 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/password"
                 />
+
+         <TextView
+             android:id="@+id/usernameText"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignLeft="@+id/login_button"
+             android:layout_centerVertical="true"
+             android:text="Username:" />
+
+         <ImageView
+             android:id="@+id/imageView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+             android:layout_centerHorizontal="true"
+             android:layout_marginTop="22dp"
+             android:src="@drawable/bigimage" />
         
     </RelativeLayout>
