@@ -48,13 +48,14 @@ public final class R {
         public static final int manageInvoicesButton=0x7f080004;
         public static final int membersButton=0x7f08000d;
         public static final int membersOf=0x7f080011;
-        public static final int menu_settings=0x7f080029;
+        public static final int menu_settings=0x7f08002a;
         public static final int password=0x7f080019;
         public static final int passwordText=0x7f080018;
         public static final int refresh=0x7f080009;
         public static final int sendGroupInvoiceTextView=0x7f080027;
         public static final int sendInvoiceButton=0x7f080026;
         public static final int showInvoices=0x7f08000e;
+        public static final int showTotalTitle=0x7f080029;
         public static final int textView1=0x7f080005;
         public static final int textView2=0x7f08001d;
         public static final int textView3=0x7f08001f;
@@ -76,6 +77,7 @@ public final class R {
         public static final int new_group=0x7f030007;
         public static final int send_group_invoice=0x7f030008;
         public static final int send_invoice=0x7f030009;
+        public static final int show_total=0x7f03000a;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

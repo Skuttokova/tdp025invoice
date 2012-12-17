@@ -32,6 +32,7 @@
         <activity android:name=".NewGroup" />
         <activity android:name=".SendGroupInvoice" />
         <activity android:name=".SendInvoice" />
+        <activity android:name=".ShowTotal" />
     </application>
 
 </manifest>

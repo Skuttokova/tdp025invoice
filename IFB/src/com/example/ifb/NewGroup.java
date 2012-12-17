@@ -83,14 +83,21 @@ public class NewGroup extends Activity {
 				if(db.getUserId(userName) != null){
 				
 					//Add user to group
-					if(db.addUserToGroup(userName, groupName, 0) == 1){
+					int addUserCode = db.addUserToGroup(userName, groupName, 0);
+					if(addUserCode == 1){
 						Toast toast = Toast.makeText(getApplicationContext(), "Invite sent to user!", Toast.LENGTH_SHORT);
 						toast.show();
 						
 						//Clear edittext field
 						mUser.setText("");
 					}
-					else if(db.addUserToGroup(userName, groupName, 0) == -1){
+					else if(addUserCode == 2){
+						dialogMessage("Error!","User already invited to the group!");
+					}
+					else if(addUserCode == 3){
+						dialogMessage("Error!","User already invited to the group!");
+					}
+					else if(addUserCode == -1){
 						dialogMessage("Error!","User already a member of the group!");
 					}
 					else{

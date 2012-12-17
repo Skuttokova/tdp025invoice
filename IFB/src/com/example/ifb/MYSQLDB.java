@@ -310,21 +310,31 @@ public class MYSQLDB {
 			return null;
 	}
 	
-	public Boolean isUserMemberOfGroup(Integer userId,Integer groupId){
-		String query = "data={\"query\":\"SELECT `id` FROM `UserInGroup` WHERE userId="+userId+" AND `groupId`="+groupId+"\"}";
+	//
+	public Integer isUserMemberOfGroup(Integer userId,Integer groupId){
+		final int MEMBER = -1;
+		final int INVITED = 2;
+		final int NOTMEMBER = 1;
+		final int DECLINED = 3;
+		
+		String query = "data={\"query\":\"SELECT `accepted` FROM `UserInGroup` WHERE userId="+userId+" AND `groupId`="+groupId+"\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json)){
 			try {
 				JSONArray jsonArray = json.getJSONArray("result");
 				if(jsonArray.length() < 1)
-					return false;
-				else
-					return true;
+					return NOTMEMBER;
+				else if(jsonArray.getJSONObject(0).getInt("accepted") == 1)
+					return MEMBER;
+				else if(jsonArray.getJSONObject(0).getInt("accepted") == 0)
+					return INVITED;
+				else if(jsonArray.getJSONObject(0).getInt("accepted") == -1)
+					return DECLINED;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		return true;
+		return MEMBER;
 	}
 //-----------------------Getters-End-----------------------	
 	
@@ -354,10 +364,19 @@ public class MYSQLDB {
 		int userId = getUserId(userName);
 		int groupId = getGroupId(groupName);
 		
-		//Check if already a member of group
-		if(isUserMemberOfGroup(userId, groupId))
-			return -1;
+		int code = isUserMemberOfGroup(userId, groupId);
 		
+		//Check if already a member of group
+		if(code == -1)
+			return -1;
+		//Check if user already invited
+		else if(code == 2)
+			return 2;
+		//Check if user declined invite
+		else if(code == 3)
+			return 3;
+		
+		//Not a member, add
 		String query = "data={\"query\":\"INSERT INTO `UserInGroup` VALUES('',"+groupId+","+userId+",'"+acceptance+"')\"}";
 		JSONObject json = sendQuery(query);
 		if(checkSuccess(json))
