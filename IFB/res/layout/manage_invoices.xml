@@ -13,12 +13,26 @@
         android:text="Manage invoices"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ListView
-        android:id="@+id/listView1"
+    
+    
+    <CheckBox
+        android:id="@+id/manage_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/groupInvoicesTextView" >
-    </ListView>
+        android:gravity="center_vertical|start|left|clip_vertical" />
+
+
+       
+        <ListView
+ 		    android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="373dp" >
+        </ListView>
+
+   
+
+
 
 </RelativeLayout>
