@@ -28,24 +28,35 @@ import android.content.Intent;
 
 public class ShowTotal extends Activity {
 	
-	MYSQLDB db = new MYSQLDB();
-	HashMap[] unpaidInvoices;
-	ListView lv;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_total);
+        
+    	MYSQLDB db = new MYSQLDB();
+    	HashMap[] unpaidInvoices;
+    	ListView lv;
     	
         Double total = db.getTotal(Globals.currentGroup);
         Integer groupMembers = db.getGroupUsers(db.getGroupId(Globals.currentGroup)).length;
-        Double perPerson = total/groupMembers;
+        Double perPerson;
+        if(total == null){
+        	perPerson = 0.0;
+        	total = 0.0;
+        }
+        else if((total != null || total != 0) && (groupMembers != null || groupMembers != 0)){
+        	perPerson = total/groupMembers;
+        }
+        else{
+        	perPerson = 0.0;
+        	total = 0.0;
+        }
         
         TextView totalTextView = (TextView) findViewById(id.totalTextView);
         totalTextView.setText("Total: "+total);
         
         Integer[] members = db.getGroupUsers(db.getGroupId(Globals.currentGroup));
-        
+       
         HashMap payers = new HashMap();
     	unpaidInvoices = db.getUnpaidInvoices(Globals.clientName, Globals.currentGroup);    	
     	for(int i = 0; i < unpaidInvoices.length; i++){

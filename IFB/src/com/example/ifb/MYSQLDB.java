@@ -304,8 +304,11 @@ public class MYSQLDB {
 			JSONArray jsonArray;
 			try {
 				jsonArray = json.getJSONArray("result");
-				HashMap[] invoices = new HashMap[jsonArray.length()];
+				
+				//Have to create ArrayList, will not be able to know the size of the array
+				ArrayList<HashMap> invoices = new ArrayList<HashMap>();
 				//For each invoice sent to user
+				int count = 0;
 				for(int i=0; i<jsonArray.length();i++){
 					int id = Integer.parseInt(jsonArray.getJSONObject(i).getString("invoiceId"));
 					if(isInvoiceApartOfGroup(id,groupId) == 1){
@@ -318,13 +321,15 @@ public class MYSQLDB {
 							map.put("amount",Double.parseDouble(jsonArray2.getJSONObject(0).getString("amount")));
 							map.put("description",jsonArray2.getJSONObject(0).getString("description"));
 							map.put("fromId",Integer.parseInt(jsonArray2.getJSONObject(0).getString("fromUserId")));
-							invoices[i] = map;
+							invoices.add(count, map);
+							count++;
 						}
 						else
 							return null;
 					}
 				}
-				return invoices;
+				HashMap[] newInvoices = invoices.toArray(new HashMap[invoices.size()]);
+				return newInvoices;
 			} 
 			catch (JSONException e) {
 				e.printStackTrace();
