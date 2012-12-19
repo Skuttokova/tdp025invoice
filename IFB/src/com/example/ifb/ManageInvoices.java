@@ -24,13 +24,13 @@ public class ManageInvoices extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_invoices);
         
-        //extView mTextView = (TextView)findViewById(R.id.listView1);
         groupMembers = db.getGroupUsersInfo(db.getGroupId(Globals.currentGroup));
         
-    //    ArrayAdapter<String> arrayAdapter =      
-     //           new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, groupMembers);
-      //          lv.setAdapter(arrayAdapter);
-       
+        
+        lv = (ListView) findViewById(R.id.listView1);
+        ArrayAdapter<String> arrayAdapter =      
+        new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, groupMembers);
+        lv.setAdapter(arrayAdapter);
 	}
 	
 }
